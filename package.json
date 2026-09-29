@@ -1,0 +1,12 @@
+{
+  "name": "pintarlabs-software-store",
+  "version": "1.0.0",
+  "description": "PintarLabs Ready-to-use Software Marketplace & Licensing Platform",
+  "scripts": {
+    "dev:server": "cd server && npm start",
+    "dev:client": "cd client && npm run dev",
+    "seed": "cd server && npm run seed",
+    "build:client": "cd client && npm run build",
+    "start": "cd server && npm start"
+  }
+}
