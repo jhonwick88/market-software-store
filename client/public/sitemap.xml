@@ -25,10 +25,11 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
+  <!-- Kategori 1: Unboxing & Bisnis Retail -->
   <url>
-    <loc>https://labspintar.com/activate</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://labspintar.com/product/pintarunbox-pack-studio-anti-retur</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
   </url>
   <url>
     <loc>https://labspintar.com/product/pintarpos-resto-retail</loc>
@@ -41,42 +42,90 @@
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://labspintar.com/product/pintarschool-spp-akademik</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.95</priority>
-  </url>
-  <url>
     <loc>https://labspintar.com/product/pintarinvoice-keuangan-usaha</loc>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://labspintar.com/product/bell-pintar-otomatis-sekolah</loc>
+    <loc>https://labspintar.com/product/pintarkargo-ekspedisi-counter</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <!-- Kategori 2: Sekolah & Pendidikan -->
+  <url>
+    <loc>https://labspintar.com/product/bell-pintar-sekolah-otomatis</loc>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://labspintar.com/product/hompimpa-pos-resto-pedas</loc>
+    <loc>https://labspintar.com/product/pintarschool-spp-akademik</loc>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
+  <url>
+    <loc>https://labspintar.com/product/pintarcbt-ujian-komputer-anti-curang</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://labspintar.com/product/pintarperpus-digital-barcode-isbn</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://labspintar.com/product/pintarbk-konseling-poin-kedisiplinan</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <!-- Kategori 3: Perkantoran & Manajemen Perusahaan -->
   <url>
     <loc>https://labspintar.com/product/biometrik-absensi-digital-geofencing</loc>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://labspintar.com/product/pintarbus-manajemen-kursi-travel</loc>
+    <loc>https://labspintar.com/product/pintarasset-inventaris-depresiasi-kantor</loc>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
+  <url>
+    <loc>https://labspintar.com/product/pintarsurat-arsip-digital-disposisi</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://labspintar.com/product/pintarhelpdesk-it-support-ticket</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://labspintar.com/product/pintarvisitor-buku-tamu-akses-qr</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <!-- Kategori 4: Pemerintahan Desa & Kelurahan -->
   <url>
     <loc>https://labspintar.com/product/sipintar-administrasi-surat-desa</loc>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
+    <loc>https://labspintar.com/product/pintarbumdes-keuangan-usaha-desa</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
     <loc>https://labspintar.com/product/pintar-retribusi-pasar-parkir-scanner</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://labspintar.com/product/pintarbansos-dtks-pemetaan-warga-desa</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://labspintar.com/product/pintartanah-letter-c-mutasi-persil-desa</loc>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
