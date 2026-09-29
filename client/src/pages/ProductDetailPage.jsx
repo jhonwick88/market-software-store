@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { 
   Check, Star, ShieldCheck, Download, Monitor, Smartphone, 
   ChevronRight, Zap, RefreshCw, AlertCircle, ShoppingCart,
-  Play, Video, ExternalLink, Image as ImageIcon
+  Play, Video, ExternalLink, Image as ImageIcon, Volume2, VolumeX, Music, Radio
 } from 'lucide-react';
 import SEO from '../components/SEO';
 import { handleImageError } from '../utils/imageFallback';
@@ -17,6 +17,8 @@ export default function ProductDetailPage() {
   const [error, setError] = useState(null);
   const [activeMediaTab, setActiveMediaTab] = useState('screenshot'); // 'screenshot' | 'video'
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+  const audioRef = useRef(null);
 
   // Modal checkout state
   const [showCheckout, setShowCheckout] = useState(false);
@@ -30,7 +32,41 @@ export default function ProductDetailPage() {
 
   useEffect(() => {
     fetchProduct();
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+      setIsPlayingAudio(false);
+    };
   }, [slug]);
+
+  const togglePlayAudio = () => {
+    if (!audioRef.current) {
+      const audioUrl = product?.slug?.includes('bell') 
+        ? '/images/bellpintar/bel_pelajaran_3.mp3' 
+        : '/images/bellpintar/bel_pelajaran_3.mp3';
+      const audio = new Audio(audioUrl);
+      audio.onended = () => setIsPlayingAudio(false);
+      audio.onerror = () => {
+        setIsPlayingAudio(false);
+        alert('Gagal memuat sampel audio bel.');
+      };
+      audioRef.current = audio;
+    }
+
+    if (isPlayingAudio) {
+      audioRef.current.pause();
+      setIsPlayingAudio(false);
+    } else {
+      audioRef.current.play().then(() => {
+        setIsPlayingAudio(true);
+      }).catch(err => {
+        console.error('Audio play error:', err);
+        setIsPlayingAudio(false);
+      });
+    }
+  };
 
   const fetchProduct = async () => {
     try {
@@ -307,39 +343,186 @@ export default function ProductDetailPage() {
               )}
             </div>
 
-            {/* Key Value Propositions / USP Cards (Anti-Bocor, 100% Offline, Multi-Device, Lifetime) */}
+            {/* Bell Pintar Special Audio Player & Interactive Chime Showcase */}
+            {(product.slug?.includes('bell') || product.product_code === 'BELL') && (
+              <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-sky-500/10 via-indigo-500/10 to-purple-500/10 border border-sky-500/25 dark:border-sky-500/30 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+                <div className="flex items-center gap-3.5 text-left w-full sm:w-auto">
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 border transition-all ${
+                    isPlayingAudio 
+                      ? 'bg-rose-500 text-white border-rose-400 shadow-lg shadow-rose-500/30 animate-pulse' 
+                      : 'bg-sky-500 text-white border-sky-400 shadow-md shadow-sky-500/20'
+                  }`}>
+                    {isPlayingAudio ? <Volume2 className="w-6 h-6 animate-bounce" /> : <Music className="w-6 h-6" />}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold text-sky-700 dark:text-sky-300 uppercase tracking-wide">Audio Demo Asli</span>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-100 text-sky-700 dark:bg-sky-500/20 dark:text-sky-300">MP3 Studio</span>
+                    </div>
+                    <h4 className="text-sm font-extrabold text-slate-900 dark:text-white">
+                      Bel Masuk: Pelajaran ke-3 (ID & EN)
+                    </h4>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                      Klik tombol untuk mendengarkan kejernihan suara narasi asli software.
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={togglePlayAudio}
+                  className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl text-xs font-bold transition-all shadow-md cursor-pointer ${
+                    isPlayingAudio
+                      ? 'bg-rose-600 hover:bg-rose-500 text-white shadow-rose-600/25 ring-2 ring-rose-400'
+                      : 'bg-sky-600 hover:bg-sky-500 text-white shadow-sky-600/25'
+                  }`}
+                >
+                  {isPlayingAudio ? (
+                    <>
+                      <VolumeX className="w-4 h-4" />
+                      <span>Hentikan Suara</span>
+                    </>
+                  ) : (
+                    <>
+                      <Play className="w-4 h-4 fill-current" />
+                      <span>🔊 Tes Bunyi Bel Sekolah</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
+
+            {/* Educational Tier Compatibility Banner for School Software */}
+            {(product.slug?.includes('bell') || product.slug?.includes('school') || product.category_id === 'cat-school') && (
+              <div className="p-3.5 rounded-2xl bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 text-left">
+                <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
+                  Teruji & Siap Digunakan Di:
+                </p>
+                <div className="flex flex-wrap gap-1.5 text-xs">
+                  <span className="px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 font-medium text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60">
+                    🏫 SD / MI Negeri & Swasta
+                  </span>
+                  <span className="px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 font-medium text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60">
+                    📚 SMP / MTs Terpadu
+                  </span>
+                  <span className="px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 font-medium text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60">
+                    🎓 SMA / MA Unggulan
+                  </span>
+                  <span className="px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 font-medium text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60">
+                    ⚙️ SMK / Vokasi Industri
+                  </span>
+                  <span className="px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 font-medium text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60">
+                    🕌 Pondok Pesantren Modern
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* Key Value Propositions / Dynamic USP Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="p-4 rounded-2xl bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent border border-emerald-500/20 text-left">
-                <div className="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 flex items-center justify-center font-bold mb-2">
-                  ⚡
-                </div>
-                <h4 className="text-xs font-bold text-slate-900 dark:text-white">100% Offline</h4>
-                <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">Bebas kuota, tanpa butuh internet</p>
-              </div>
+              {(product.slug?.includes('bell') || product.product_code === 'BELL') ? (
+                <>
+                  <div className="p-4 rounded-2xl bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent border border-emerald-500/20 text-left">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 flex items-center justify-center font-bold mb-2">
+                      ⏰
+                    </div>
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-white">100% Otomatis</h4>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">Presisi per detik jam alarm</p>
+                  </div>
 
-              <div className="p-4 rounded-2xl bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/20 text-left">
-                <div className="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 flex items-center justify-center font-bold mb-2">
-                  🛡️
-                </div>
-                <h4 className="text-xs font-bold text-slate-900 dark:text-white">Anti-Bocor Kas</h4>
-                <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">Rekonsiliasi shift laci kasir</p>
-              </div>
+                  <div className="p-4 rounded-2xl bg-gradient-to-br from-sky-500/10 via-sky-500/5 to-transparent border border-sky-500/20 text-left">
+                    <div className="w-8 h-8 rounded-xl bg-sky-100 dark:bg-sky-500/20 text-sky-700 dark:text-sky-400 flex items-center justify-center font-bold mb-2">
+                      📱
+                    </div>
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-white">Remote HP Guru</h4>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">PIN Guru Piket & Admin</p>
+                  </div>
 
-              <div className="p-4 rounded-2xl bg-gradient-to-br from-sky-500/10 via-sky-500/5 to-transparent border border-sky-500/20 text-left">
-                <div className="w-8 h-8 rounded-xl bg-sky-100 dark:bg-sky-500/20 text-sky-700 dark:text-sky-400 flex items-center justify-center font-bold mb-2">
-                  📱
-                </div>
-                <h4 className="text-xs font-bold text-slate-900 dark:text-white">Multi-Device LAN</h4>
-                <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">PC Windows + HP Android</p>
-              </div>
+                  <div className="p-4 rounded-2xl bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/20 text-left">
+                    <div className="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 flex items-center justify-center font-bold mb-2">
+                      🎙️
+                    </div>
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-white">119+ Nada Studio</h4>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">Bahasa ID, EN & Arab</p>
+                  </div>
 
-              <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-500/10 via-purple-500/5 to-transparent border border-purple-500/20 text-left">
-                <div className="w-8 h-8 rounded-xl bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-400 flex items-center justify-center font-bold mb-2">
-                  💎
-                </div>
-                <h4 className="text-xs font-bold text-slate-900 dark:text-white">1x Bayar Selamanya</h4>
-                <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">Tanpa sewa bulanan / komisi</p>
-              </div>
+                  <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-500/10 via-purple-500/5 to-transparent border border-purple-500/20 text-left">
+                    <div className="w-8 h-8 rounded-xl bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-400 flex items-center justify-center font-bold mb-2">
+                      💎
+                    </div>
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-white">1x Bayar Selamanya</h4>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">Tanpa tagihan bulanan</p>
+                  </div>
+                </>
+              ) : (product.slug?.includes('pos') || product.product_code === 'POS') ? (
+                <>
+                  <div className="p-4 rounded-2xl bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent border border-emerald-500/20 text-left">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 flex items-center justify-center font-bold mb-2">
+                      ⚡
+                    </div>
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-white">100% Offline</h4>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">Bebas kuota, tanpa internet</p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/20 text-left">
+                    <div className="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 flex items-center justify-center font-bold mb-2">
+                      🛡️
+                    </div>
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-white">Anti-Bocor Kas</h4>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">Rekonsiliasi shift laci kasir</p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-gradient-to-br from-sky-500/10 via-sky-500/5 to-transparent border border-sky-500/20 text-left">
+                    <div className="w-8 h-8 rounded-xl bg-sky-100 dark:bg-sky-500/20 text-sky-700 dark:text-sky-400 flex items-center justify-center font-bold mb-2">
+                      📱
+                    </div>
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-white">Multi-Device LAN</h4>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">PC Windows + HP Android</p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-500/10 via-purple-500/5 to-transparent border border-purple-500/20 text-left">
+                    <div className="w-8 h-8 rounded-xl bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-400 flex items-center justify-center font-bold mb-2">
+                      💎
+                    </div>
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-white">1x Bayar Selamanya</h4>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">Tanpa sewa bulanan / komisi</p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="p-4 rounded-2xl bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent border border-emerald-500/20 text-left">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 flex items-center justify-center font-bold mb-2">
+                      ⚡
+                    </div>
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-white">Offline-First</h4>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">Respon cepat & stabil</p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/20 text-left">
+                    <div className="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 flex items-center justify-center font-bold mb-2">
+                      🛡️
+                    </div>
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-white">Keamanan Data</h4>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">Database lokal terproteksi</p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-gradient-to-br from-sky-500/10 via-sky-500/5 to-transparent border border-sky-500/20 text-left">
+                    <div className="w-8 h-8 rounded-xl bg-sky-100 dark:bg-sky-500/20 text-sky-700 dark:text-sky-400 flex items-center justify-center font-bold mb-2">
+                      💻
+                    </div>
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-white">Multi-Platform</h4>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">Windows & Android</p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-500/10 via-purple-500/5 to-transparent border border-purple-500/20 text-left">
+                    <div className="w-8 h-8 rounded-xl bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-400 flex items-center justify-center font-bold mb-2">
+                      💎
+                    </div>
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-white">Lisensi Lifetime</h4>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">Beli 1x pakai selamanya</p>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Description & Features Section */}
