@@ -5,7 +5,7 @@ import {
   Clock, XCircle, Search, RefreshCw, MessageCircle, Lock, LogOut,
   Edit, Play, Video, ExternalLink, Save, X, Eye, FileText, Check,
   AlertTriangle, Sparkles, Youtube, Upload, Trash2, Plus, Image as ImageIcon,
-  ArrowUp, ArrowDown, Star
+  ArrowUp, ArrowDown, Star, KeyRound, User, Settings, ShieldCheck
 } from 'lucide-react';
 import SEO from '../components/SEO';
 
@@ -15,12 +15,25 @@ export default function AdminDashboardPage() {
   const [password, setPassword] = useState('');
   const [authError, setAuthError] = useState('');
   
-  const [activeTab, setActiveTab] = useState('overview'); // 'overview', 'orders', 'catalog'
+  const [activeTab, setActiveTab] = useState('overview'); // 'overview', 'orders', 'catalog', 'profile'
   const [overview, setOverview] = useState(null);
   const [orders, setOrders] = useState([]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+
+  // Profile / Password Change State
+  const [profileForm, setProfileForm] = useState({
+    name: 'Admin PintarLabs',
+    email: 'admin@pintarlabs.id',
+    phone: '081234567890',
+    current_password: '',
+    new_password: '',
+    confirm_password: ''
+  });
+  const [profileLoading, setProfileLoading] = useState(false);
+  const [profileSuccess, setProfileSuccess] = useState('');
+  const [profileError, setProfileError] = useState('');
 
   // Edit Product Modal State
   const [editingProduct, setEditingProduct] = useState(null);
@@ -168,6 +181,48 @@ export default function AdminDashboardPage() {
     }
   };
 
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
+    setProfileError('');
+    setProfileSuccess('');
+
+    if (profileForm.new_password) {
+      if (profileForm.new_password !== profileForm.confirm_password) {
+        setProfileError('Konfirmasi kata sandi baru tidak cocok!');
+        return;
+      }
+      if (profileForm.new_password.length < 6) {
+        setProfileError('Kata sandi baru minimal 6 karakter!');
+        return;
+      }
+      if (!profileForm.current_password) {
+        setProfileError('Harap masukkan kata sandi saat ini untuk konfirmasi keamanan.');
+        return;
+      }
+    }
+
+    try {
+      setProfileLoading(true);
+      const headers = { Authorization: `Bearer ${token}` };
+      const res = await axios.put('/api/auth/profile', profileForm, { headers });
+      if (res.data.data?.token) {
+        localStorage.setItem('pintarlabs_store_admin_token', res.data.data.token);
+        setToken(res.data.data.token);
+      }
+      setProfileSuccess('Profil dan kredensial admin berhasil diperbarui!');
+      setProfileForm(prev => ({
+        ...prev,
+        current_password: '',
+        new_password: '',
+        confirm_password: ''
+      }));
+    } catch (err) {
+      setProfileError(err.response?.data?.message || 'Gagal memperbarui profil admin');
+    } finally {
+      setProfileLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (token) {
       fetchDashboardData();
@@ -179,15 +234,25 @@ export default function AdminDashboardPage() {
       setLoading(true);
       const headers = { Authorization: `Bearer ${token}` };
       
-      const [statsRes, ordersRes, prodsRes] = await Promise.all([
+      const [statsRes, ordersRes, prodsRes, meRes] = await Promise.all([
         axios.get('/api/stats/overview', { headers }).catch(() => ({ data: { data: {} } })),
         axios.get('/api/orders/admin/list', { headers }).catch(() => ({ data: { data: [] } })),
-        axios.get('/api/products')
+        axios.get('/api/products'),
+        axios.get('/api/auth/me', { headers }).catch(() => ({ data: { data: null } }))
       ]);
 
       setOverview(statsRes.data.data || {});
       setOrders(ordersRes.data.data || []);
       setProducts(prodsRes.data.data || prodsRes.data || []);
+
+      if (meRes.data?.data) {
+        setProfileForm(prev => ({
+          ...prev,
+          name: meRes.data.data.name || 'Admin PintarLabs',
+          email: meRes.data.data.email || 'admin@pintarlabs.id',
+          phone: meRes.data.data.phone || '081234567890'
+        }));
+      }
     } catch (err) {
       console.error('Error fetching admin data:', err);
     } finally {
@@ -362,6 +427,17 @@ export default function AdminDashboardPage() {
           >
             <Package className="w-4 h-4" />
             <span>Katalog Software ({products.length})</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('profile')}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 ${
+              activeTab === 'profile'
+                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
+                : 'text-slate-400 hover:text-white hover:bg-slate-900'
+            }`}
+          >
+            <KeyRound className="w-4 h-4" />
+            <span>Ganti Password & Profil</span>
           </button>
         </div>
 
@@ -619,6 +695,131 @@ export default function AdminDashboardPage() {
                   </div>
                 );
               })}
+            </div>
+          </div>
+        )}
+
+        {/* Tab 4: Pengaturan Akun & Ganti Password */}
+        {activeTab === 'profile' && (
+          <div className="max-w-2xl mx-auto space-y-6">
+            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl space-y-6">
+              <div className="flex items-center gap-3 pb-4 border-b border-slate-800">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center">
+                  <KeyRound className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-white">Pengaturan Akun & Kata Sandi</h2>
+                  <p className="text-xs text-slate-400">Ubah email login, nama profil, dan perbarui kata sandi admin.</p>
+                </div>
+              </div>
+
+              {profileSuccess && (
+                <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>{profileSuccess}</span>
+                </div>
+              )}
+
+              {profileError && (
+                <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
+                  <span>{profileError}</span>
+                </div>
+              )}
+
+              <form onSubmit={handleUpdateProfile} className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1">Nama Lengkap Admin</label>
+                    <input
+                      type="text"
+                      required
+                      value={profileForm.name}
+                      onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-none focus:border-indigo-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1">Nomor WhatsApp / HP</label>
+                    <input
+                      type="text"
+                      value={profileForm.phone}
+                      onChange={(e) => setProfileForm({ ...profileForm, phone: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-none focus:border-indigo-500"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Email Login Admin</label>
+                  <input
+                    type="email"
+                    required
+                    value={profileForm.email}
+                    onChange={(e) => setProfileForm({ ...profileForm, email: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-none focus:border-indigo-500"
+                  />
+                  <p className="text-[11px] text-slate-500 mt-1">Email ini akan digunakan untuk login berikutnya ke dashboard admin.</p>
+                </div>
+
+                <div className="pt-4 border-t border-slate-800 space-y-4">
+                  <div className="flex items-center gap-2 text-indigo-400 text-xs font-bold uppercase tracking-wider">
+                    <ShieldCheck className="w-4 h-4" />
+                    <span>Ubah Kata Sandi (Opsional)</span>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1">Kata Sandi Saat Ini (Lama)</label>
+                    <input
+                      type="password"
+                      placeholder="Masukkan kata sandi lama jika ingin mengganti sandi"
+                      value={profileForm.current_password}
+                      onChange={(e) => setProfileForm({ ...profileForm, current_password: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-none focus:border-indigo-500"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 mb-1">Kata Sandi Baru</label>
+                      <input
+                        type="password"
+                        placeholder="Minimal 6 karakter"
+                        value={profileForm.new_password}
+                        onChange={(e) => setProfileForm({ ...profileForm, new_password: e.target.value })}
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-none focus:border-indigo-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 mb-1">Ulangi Kata Sandi Baru</label>
+                      <input
+                        type="password"
+                        placeholder="Konfirmasi kata sandi baru"
+                        value={profileForm.confirm_password}
+                        onChange={(e) => setProfileForm({ ...profileForm, confirm_password: e.target.value })}
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-none focus:border-indigo-500"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-slate-800 flex justify-end">
+                  <button
+                    type="submit"
+                    disabled={profileLoading}
+                    className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all flex items-center gap-2 disabled:opacity-50 shadow-md shadow-indigo-600/20"
+                  >
+                    {profileLoading ? (
+                      <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                    ) : (
+                      <Save className="w-3.5 h-3.5" />
+                    )}
+                    <span>{profileLoading ? 'Menyimpan...' : 'Simpan Perubahan Akun'}</span>
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         )}

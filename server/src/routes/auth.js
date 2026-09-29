@@ -103,4 +103,70 @@ router.get('/me', requireAuth, async (req, res) => {
   }
 });
 
+// PUT /api/auth/change-password (Ubah Password & Email Admin)
+router.put('/profile', requireAuth, async (req, res) => {
+  try {
+    const { name, email, phone, current_password, new_password } = req.body;
+    const userId = req.user.id;
+
+    const user = await dbAsync.get('SELECT * FROM users WHERE id = ?', [userId]);
+    if (!user) {
+      return res.status(404).json({ status: 'error', error_code: 'USER_NOT_FOUND', message: 'User tidak ditemukan' });
+    }
+
+    // Jika ingin mengganti password, validasi password lama
+    let passwordHash = user.password_hash;
+    if (new_password && new_password.trim() !== '') {
+      if (!current_password) {
+        return res.status(400).json({ status: 'error', error_code: 'PASSWORD_REQUIRED', message: 'Password saat ini wajib diisi untuk verifikasi' });
+      }
+      const isMatch = await bcrypt.compare(current_password, user.password_hash);
+      if (!isMatch) {
+        return res.status(400).json({ status: 'error', error_code: 'INVALID_CURRENT_PASSWORD', message: 'Password saat ini tidak sesuai' });
+      }
+      if (new_password.length < 6) {
+        return res.status(400).json({ status: 'error', error_code: 'WEAK_PASSWORD', message: 'Password baru minimal 6 karakter' });
+      }
+      const salt = await bcrypt.genSalt(10);
+      passwordHash = await bcrypt.hash(new_password, salt);
+    }
+
+    // Periksa jika email diubah dan sudah terdaftar di user lain
+    const targetEmail = (email || user.email).toLowerCase().trim();
+    if (targetEmail !== user.email) {
+      const existing = await dbAsync.get('SELECT id FROM users WHERE email = ? AND id != ?', [targetEmail, userId]);
+      if (existing) {
+        return res.status(400).json({ status: 'error', error_code: 'EMAIL_IN_USE', message: 'Email tersebut sudah digunakan oleh akun lain' });
+      }
+    }
+
+    const targetName = (name || user.name).trim();
+    const targetPhone = phone !== undefined ? phone : user.phone;
+
+    await dbAsync.run(
+      'UPDATE users SET name = ?, email = ?, phone = ?, password_hash = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+      [targetName, targetEmail, targetPhone, passwordHash, userId]
+    );
+
+    // Buat token baru dengan data terbaru
+    const newToken = jwt.sign(
+      { id: user.id, email: targetEmail, name: targetName, role: user.role },
+      JWT_SECRET,
+      { expiresIn: '30d' }
+    );
+
+    res.json({
+      status: 'success',
+      message: 'Profil dan password berhasil diperbarui!',
+      data: {
+        token: newToken,
+        user: { id: user.id, name: targetName, email: targetEmail, role: user.role, phone: targetPhone }
+      }
+    });
+  } catch (err) {
+    console.error('Update profile error:', err);
+    res.status(500).json({ status: 'error', error_code: 'SERVER_ERROR', message: err.message });
+  }
+});
+
 module.exports = router;
