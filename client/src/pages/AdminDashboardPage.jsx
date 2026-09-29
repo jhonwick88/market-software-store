@@ -298,58 +298,61 @@ export default function AdminDashboardPage() {
   // Login Form if unauthenticated
   if (!token) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center p-4">
+      <div className="relative min-h-[85vh] flex items-center justify-center p-4 overflow-hidden">
+        <div className="pointer-events-none absolute -top-20 right-10 w-96 h-96 bg-indigo-200/30 dark:bg-indigo-600/10 rounded-full blur-3xl -z-10" />
+        <div className="pointer-events-none absolute bottom-10 -left-10 w-80 h-80 bg-purple-200/30 dark:bg-purple-600/10 rounded-full blur-3xl -z-10" />
+
         <SEO title="Admin Toko Software - PintarLabs" />
-        <div className="max-w-md w-full p-8 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl">
+        <div className="max-w-md w-full p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-2xl shadow-slate-200/50 dark:shadow-none">
           <div className="text-center mb-6">
-            <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center mx-auto mb-3">
+            <div className="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-200/80 dark:bg-indigo-500/10 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mx-auto mb-3">
               <Lock className="w-6 h-6" />
             </div>
-            <h1 className="text-2xl font-bold text-white">Admin Marketplace Toko</h1>
-            <p className="text-xs text-slate-400 mt-1">Masuk untuk mengelola pesanan & omset software</p>
+            <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">Admin Toko Software</h1>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Masuk untuk mengelola pesanan & omset marketplace</p>
           </div>
 
           {authError && (
-            <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs mb-4">
+            <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 dark:bg-rose-500/10 dark:border-rose-500/20 dark:text-rose-300 text-xs mb-4">
               {authError}
             </div>
           )}
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Email Admin</label>
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Email Admin</label>
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@pintarlabs.id"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-none focus:border-indigo-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white text-xs shadow-2xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Kata Sandi</label>
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Kata Sandi</label>
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-none focus:border-indigo-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white text-xs shadow-2xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs shadow-lg shadow-indigo-600/30 transition-all"
+              className="w-full py-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold text-xs shadow-lg shadow-indigo-600/25 transition-all"
             >
               Masuk ke Dashboard Toko
             </button>
           </form>
 
-          <p className="text-[11px] text-slate-500 text-center mt-6">
-            Default Admin: <span className="text-slate-400 font-mono">admin@pintarlabs.id / admin123</span>
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 text-center mt-6">
+            Akun Bawaan: <span className="text-slate-700 dark:text-slate-300 font-mono font-semibold">admin@pintarlabs.id / admin123</span>
           </p>
         </div>
       </div>
@@ -364,79 +367,83 @@ export default function AdminDashboardPage() {
   );
 
   return (
-    <div className="min-h-screen py-10">
+    <div className="relative min-h-screen py-10 transition-colors duration-200">
       <SEO title="Dashboard Admin Marketplace - PintarLabs" />
+
+      {/* Ambient background decoration */}
+      <div className="pointer-events-none absolute -top-20 right-0 w-96 h-96 bg-indigo-200/30 dark:bg-indigo-600/10 rounded-full blur-3xl -z-10" />
+      <div className="pointer-events-none absolute top-80 -left-20 w-80 h-80 bg-purple-200/20 dark:bg-purple-600/10 rounded-full blur-3xl -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-800 gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-200/90 dark:border-slate-800 gap-4 mb-8">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-indigo-400">Panel Manajemen Toko</span>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mt-1">Marketplace Jual Beli Software</h1>
+            <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Panel Manajemen Toko</span>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">Marketplace Jual Beli Software</h1>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             <button
               onClick={fetchDashboardData}
-              className="p-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 text-xs flex items-center gap-2"
+              className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-slate-300 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center gap-2 shadow-xs transition-all"
             >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-              <span>Refresh</span>
+              <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+              <span>Segarkan Data</span>
             </button>
             <button
               onClick={handleLogout}
-              className="p-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 text-rose-300 text-xs flex items-center gap-2"
+              className="px-3.5 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 dark:bg-rose-500/10 dark:hover:bg-rose-500/20 dark:border-rose-500/20 dark:text-rose-300 text-xs font-semibold flex items-center gap-2 transition-all shadow-xs"
             >
-              <LogOut className="w-4 h-4" />
+              <LogOut className="w-3.5 h-3.5" />
               <span>Keluar</span>
             </button>
           </div>
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex items-center gap-2 mb-8 border-b border-slate-800 pb-3">
+        <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-100/90 dark:bg-slate-900/90 border border-slate-200/80 dark:border-slate-800 mb-8 w-fit">
           <button
             onClick={() => setActiveTab('overview')}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 ${
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
               activeTab === 'overview'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
-                : 'text-slate-400 hover:text-white hover:bg-slate-900'
+                ? 'bg-white dark:bg-indigo-600 text-indigo-700 dark:text-white shadow-md shadow-slate-200 dark:shadow-indigo-600/30 border border-slate-200/60 dark:border-transparent'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800/60'
             }`}
           >
-            <LayoutDashboard className="w-4 h-4" />
+            <LayoutDashboard className="w-4 h-4 text-indigo-600 dark:text-white" />
             <span>Ringkasan & Omset</span>
           </button>
           <button
             onClick={() => setActiveTab('orders')}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 ${
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
               activeTab === 'orders'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
-                : 'text-slate-400 hover:text-white hover:bg-slate-900'
+                ? 'bg-white dark:bg-indigo-600 text-indigo-700 dark:text-white shadow-md shadow-slate-200 dark:shadow-indigo-600/30 border border-slate-200/60 dark:border-transparent'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800/60'
             }`}
           >
-            <ShoppingCart className="w-4 h-4" />
+            <ShoppingCart className="w-4 h-4 text-indigo-600 dark:text-white" />
             <span>Pesanan Masuk ({orders.length})</span>
           </button>
           <button
             onClick={() => setActiveTab('catalog')}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 ${
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
               activeTab === 'catalog'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
-                : 'text-slate-400 hover:text-white hover:bg-slate-900'
+                ? 'bg-white dark:bg-indigo-600 text-indigo-700 dark:text-white shadow-md shadow-slate-200 dark:shadow-indigo-600/30 border border-slate-200/60 dark:border-transparent'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800/60'
             }`}
           >
-            <Package className="w-4 h-4" />
+            <Package className="w-4 h-4 text-indigo-600 dark:text-white" />
             <span>Katalog Software ({products.length})</span>
           </button>
           <button
             onClick={() => setActiveTab('profile')}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 ${
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
               activeTab === 'profile'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
-                : 'text-slate-400 hover:text-white hover:bg-slate-900'
+                ? 'bg-white dark:bg-indigo-600 text-indigo-700 dark:text-white shadow-md shadow-slate-200 dark:shadow-indigo-600/30 border border-slate-200/60 dark:border-transparent'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800/60'
             }`}
           >
-            <KeyRound className="w-4 h-4" />
+            <KeyRound className="w-4 h-4 text-indigo-600 dark:text-white" />
             <span>Ganti Password & Profil</span>
           </button>
         </div>
@@ -445,65 +452,68 @@ export default function AdminDashboardPage() {
         {activeTab === 'overview' && (
           <div className="space-y-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800">
-                <span className="text-xs text-slate-400 block font-medium mb-1">Total Omset Penjualan</span>
-                <span className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">
+              <div className="p-6 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200/90 dark:border-slate-800 shadow-xl shadow-slate-100/80 dark:shadow-none">
+                <span className="text-xs text-slate-500 dark:text-slate-400 block font-semibold mb-1">Total Omset Penjualan</span>
+                <span className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-300">
                   {formatRupiah(overview?.total_revenue)}
                 </span>
-                <p className="text-[11px] text-slate-500 mt-1">Dari transaksi status LUNAS</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5 flex items-center gap-1">
+                  <Check className="w-3 h-3 text-emerald-500" />
+                  <span>Dari transaksi terverifikasi LUNAS</span>
+                </p>
               </div>
 
-              <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800">
-                <span className="text-xs text-slate-400 block font-medium mb-1">Total Transaksi</span>
-                <span className="text-2xl font-extrabold text-white">
+              <div className="p-6 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200/90 dark:border-slate-800 shadow-xl shadow-slate-100/80 dark:shadow-none">
+                <span className="text-xs text-slate-500 dark:text-slate-400 block font-semibold mb-1">Total Transaksi</span>
+                <span className="text-2xl font-extrabold text-slate-900 dark:text-white">
                   {overview?.total_orders || 0}
                 </span>
-                <p className="text-[11px] text-slate-500 mt-1">Seluruh pesanan masuk</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">Seluruh pesanan masuk</p>
               </div>
 
-              <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800">
-                <span className="text-xs text-slate-400 block font-medium mb-1">Pesanan Lunas</span>
-                <span className="text-2xl font-extrabold text-emerald-400">
+              <div className="p-6 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200/90 dark:border-slate-800 shadow-xl shadow-slate-100/80 dark:shadow-none">
+                <span className="text-xs text-slate-500 dark:text-slate-400 block font-semibold mb-1">Pesanan Lunas</span>
+                <span className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400">
                   {overview?.paid_orders || 0}
                 </span>
-                <p className="text-[11px] text-slate-500 mt-1">Pembayaran terverifikasi</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">Pembayaran terverifikasi</p>
               </div>
 
-              <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800">
-                <span className="text-xs text-slate-400 block font-medium mb-1">Menunggu Pembayaran</span>
-                <span className="text-2xl font-extrabold text-amber-400">
+              <div className="p-6 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200/90 dark:border-slate-800 shadow-xl shadow-slate-100/80 dark:shadow-none">
+                <span className="text-xs text-slate-500 dark:text-slate-400 block font-semibold mb-1">Menunggu Pembayaran</span>
+                <span className="text-2xl font-extrabold text-amber-600 dark:text-amber-400">
                   {overview?.pending_orders || 0}
                 </span>
-                <p className="text-[11px] text-slate-500 mt-1">Invoice belum diverifikasi</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">Invoice belum diverifikasi</p>
               </div>
             </div>
 
             {/* Recent Orders List */}
-            <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
-              <h3 className="text-base font-bold text-white mb-4">5 Transaksi Terbaru</h3>
+            <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200/90 dark:border-slate-800 shadow-xl shadow-slate-100/80 dark:shadow-none">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white mb-4">5 Transaksi Terbaru</h3>
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
-                  <thead className="text-slate-400 border-b border-slate-800 pb-2">
+                  <thead className="text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800 pb-2 bg-slate-50/50 dark:bg-slate-950/40">
                     <tr>
-                      <th className="py-2.5">Invoice</th>
-                      <th className="py-2.5">Software</th>
-                      <th className="py-2.5">Customer</th>
-                      <th className="py-2.5">Total</th>
-                      <th className="py-2.5">Status</th>
+                      <th className="py-3 px-3">Invoice</th>
+                      <th className="py-3 px-3">Software</th>
+                      <th className="py-3 px-3">Customer</th>
+                      <th className="py-3 px-3">Total</th>
+                      <th className="py-3 px-3">Status</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/60">
+                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
                     {(overview?.recent_orders || []).map((order) => (
-                      <tr key={order.id} className="hover:bg-slate-950/40">
-                        <td className="py-3 font-mono font-semibold text-indigo-300">{order.invoice_number}</td>
-                        <td className="py-3 text-white">{order.product_name} ({order.plan_name})</td>
-                        <td className="py-3 text-slate-300">{order.customer_name}</td>
-                        <td className="py-3 font-bold text-emerald-400">{formatRupiah(order.total_amount)}</td>
-                        <td className="py-3">
-                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                      <tr key={order.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-950/40 transition-colors">
+                        <td className="py-3 px-3 font-mono font-bold text-indigo-600 dark:text-indigo-300">{order.invoice_number}</td>
+                        <td className="py-3 px-3 text-slate-900 dark:text-white font-medium">{order.product_name} ({order.plan_name})</td>
+                        <td className="py-3 px-3 text-slate-700 dark:text-slate-300">{order.customer_name}</td>
+                        <td className="py-3 px-3 font-extrabold text-emerald-600 dark:text-emerald-400">{formatRupiah(order.total_amount)}</td>
+                        <td className="py-3 px-3">
+                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
                             order.payment_status === 'PAID'
-                              ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                              : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20'
+                              : 'bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20'
                           }`}>
                             {order.payment_status}
                           </span>
@@ -521,79 +531,79 @@ export default function AdminDashboardPage() {
         {activeTab === 'orders' && (
           <div className="space-y-6">
             <div className="flex items-center justify-between gap-4">
-              <div className="relative w-full max-w-sm">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3 pointer-events-none" />
+              <div className="relative w-full max-w-md">
+                <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3 pointer-events-none" />
                 <input
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Cari invoice, nama, HP, atau software..."
-                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-white text-xs placeholder-slate-400 focus:outline-none focus:border-indigo-500"
+                  placeholder="Cari invoice, nama customer, nomor WhatsApp..."
+                  className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white text-xs placeholder-slate-400 shadow-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
                 />
               </div>
             </div>
 
-            <div className="rounded-2xl bg-slate-900/60 border border-slate-800 overflow-hidden">
+            <div className="rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200/90 dark:border-slate-800 shadow-xl shadow-slate-100/80 dark:shadow-none overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-900/90 text-slate-400 border-b border-slate-800">
+                  <thead className="bg-slate-50 dark:bg-slate-950/70 text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800">
                     <tr>
-                      <th className="p-3.5">Invoice</th>
-                      <th className="p-3.5">Customer / WhatsApp</th>
-                      <th className="p-3.5">Software & Paket</th>
-                      <th className="p-3.5">Total & Metode</th>
-                      <th className="p-3.5">Status Pembayaran</th>
-                      <th className="p-3.5 text-right">Aksi</th>
+                      <th className="p-4">Invoice</th>
+                      <th className="p-4">Customer / WhatsApp</th>
+                      <th className="p-4">Software & Paket</th>
+                      <th className="p-4">Total & Metode</th>
+                      <th className="p-4">Status Pembayaran</th>
+                      <th className="p-4 text-right">Aksi</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/60">
+                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
                     {filteredOrders.length === 0 ? (
                       <tr>
-                        <td colSpan="6" className="text-center py-10 text-slate-500">Tidak ada pesanan yang sesuai</td>
+                        <td colSpan="6" className="text-center py-10 text-slate-500 dark:text-slate-400">Tidak ada pesanan yang sesuai</td>
                       </tr>
                     ) : (
                       filteredOrders.map((order) => (
-                        <tr key={order.id} className="hover:bg-slate-950/40">
-                          <td className="p-3.5 font-mono font-bold text-indigo-300">
+                        <tr key={order.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-950/40 transition-colors">
+                          <td className="p-4 font-mono font-bold text-indigo-600 dark:text-indigo-300">
                             {order.invoice_number}
-                            <span className="block text-[10px] text-slate-500 font-sans">{new Date(order.created_at).toLocaleDateString('id-ID')}</span>
+                            <span className="block text-[10px] text-slate-500 dark:text-slate-400 font-sans mt-0.5">{new Date(order.created_at).toLocaleDateString('id-ID')}</span>
                           </td>
-                          <td className="p-3.5">
-                            <span className="font-semibold text-white block">{order.customer_name}</span>
+                          <td className="p-4">
+                            <span className="font-bold text-slate-900 dark:text-white block">{order.customer_name}</span>
                             <a 
                               href={`https://wa.me/${order.customer_phone?.replace(/\D/g,'')}?text=Halo%20${encodeURIComponent(order.customer_name)},%20terima%20kasih%20telah%20memesan%20${encodeURIComponent(order.product_name)}%20di%20PintarLabs.`}
                               target="_blank" 
                               rel="noopener noreferrer"
-                              className="text-[11px] text-emerald-400 hover:underline flex items-center gap-1 mt-0.5"
+                              className="text-[11px] text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1 mt-0.5 font-semibold"
                             >
-                              <MessageCircle className="w-3 h-3" />
+                              <MessageCircle className="w-3.5 h-3.5" />
                               {order.customer_phone}
                             </a>
                           </td>
-                          <td className="p-3.5">
-                            <span className="text-white font-medium block">{order.product_name}</span>
-                            <span className="text-[11px] text-slate-400">{order.plan_name}</span>
+                          <td className="p-4">
+                            <span className="text-slate-900 dark:text-white font-semibold block">{order.product_name}</span>
+                            <span className="text-[11px] text-slate-500 dark:text-slate-400">{order.plan_name}</span>
                           </td>
-                          <td className="p-3.5">
-                            <span className="font-bold text-emerald-400 block">{formatRupiah(order.total_amount)}</span>
-                            <span className="text-[10px] text-slate-400 uppercase">{order.payment_method || 'QRIS'}</span>
+                          <td className="p-4">
+                            <span className="font-extrabold text-emerald-600 dark:text-emerald-400 block">{formatRupiah(order.total_amount)}</span>
+                            <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">{order.payment_method || 'QRIS'}</span>
                           </td>
-                          <td className="p-3.5">
-                            <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold inline-block ${
+                          <td className="p-4">
+                            <span className={`px-3 py-1 rounded-full text-[10px] font-bold inline-block ${
                               order.payment_status === 'PAID'
-                                ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                                ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20'
                                 : order.payment_status === 'CANCELLED'
-                                ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
-                                : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                                ? 'bg-rose-50 text-rose-700 border border-rose-200 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/20'
+                                : 'bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20'
                             }`}>
                               {order.payment_status === 'PAID' ? 'LUNAS' : order.payment_status === 'CANCELLED' ? 'BATAL' : 'MENUNGGU'}
                             </span>
                           </td>
-                          <td className="p-3.5 text-right space-x-1.5">
+                          <td className="p-4 text-right space-x-1.5">
                             {order.payment_status !== 'PAID' && (
                               <button
                                 onClick={() => updateOrderStatus(order.id, 'PAID')}
-                                className="px-2.5 py-1 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/30 text-emerald-300 text-[11px] font-semibold"
+                                className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold shadow-xs transition-colors"
                               >
                                 Tandai Lunas
                               </button>
@@ -601,7 +611,7 @@ export default function AdminDashboardPage() {
                             {order.payment_status === 'PAID' && (
                               <button
                                 onClick={() => updateOrderStatus(order.id, 'PENDING')}
-                                className="px-2.5 py-1 rounded-lg bg-amber-600/20 hover:bg-amber-600/30 border border-amber-500/30 text-amber-300 text-[11px] font-semibold"
+                                className="px-3 py-1.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-800 dark:bg-amber-500/20 dark:hover:bg-amber-500/30 dark:text-amber-300 text-[11px] font-semibold transition-colors"
                               >
                                 Ubah Pending
                               </button>
@@ -609,7 +619,7 @@ export default function AdminDashboardPage() {
                             {order.payment_status !== 'CANCELLED' && (
                               <button
                                 onClick={() => updateOrderStatus(order.id, 'CANCELLED')}
-                                className="px-2.5 py-1 rounded-lg bg-rose-600/20 hover:bg-rose-600/30 border border-rose-500/30 text-rose-300 text-[11px] font-semibold"
+                                className="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 dark:bg-rose-500/20 dark:hover:bg-rose-500/30 dark:text-rose-300 text-[11px] font-semibold transition-colors"
                               >
                                 Batalkan
                               </button>
@@ -628,13 +638,13 @@ export default function AdminDashboardPage() {
         {/* Tab 3: Catalog Software */}
         {activeTab === 'catalog' && (
           <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/90 dark:border-slate-800">
               <div>
-                <h2 className="text-xl font-bold text-white">Katalog Software & Video Demo</h2>
-                <p className="text-xs text-slate-400">Kelola informasi produk, tautan download installer, dan link video YouTube demo aplikasi.</p>
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white">Katalog Software & Video Demo</h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Kelola informasi produk, tautan download installer, dan link video YouTube demo aplikasi.</p>
               </div>
-              <span className="text-xs text-slate-400 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-xl">
-                Total: <strong className="text-white">{products.length}</strong> Software
+              <span className="text-xs text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3.5 py-1.5 rounded-xl shadow-2xs">
+                Total: <strong className="text-indigo-600 dark:text-white font-bold">{products.length}</strong> Software
               </span>
             </div>
 
@@ -642,50 +652,50 @@ export default function AdminDashboardPage() {
               {products.map(p => {
                 const hasVideo = !!(p.video_tutorial_url && p.video_tutorial_url.trim() !== '' && !p.video_tutorial_url.includes('playlist'));
                 return (
-                  <div key={p.id} className="p-5 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between space-y-4 hover:border-slate-700 transition-colors">
+                  <div key={p.id} className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 flex flex-col justify-between space-y-4 shadow-xl shadow-slate-100/80 dark:shadow-none hover:border-indigo-300 dark:hover:border-slate-700 transition-all">
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200 dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/20">
                           {p.product_code}
                         </span>
-                        <span className="text-xs text-slate-400">v{p.version || '1.0'}</span>
+                        <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">v{p.version || '1.0'}</span>
                       </div>
 
                       <div>
-                        <h3 className="text-base font-bold text-white line-clamp-1">{p.name}</h3>
-                        <p className="text-xs text-slate-400 line-clamp-2 mt-1">{p.tagline}</p>
+                        <h3 className="text-base font-bold text-slate-900 dark:text-white line-clamp-1">{p.name}</h3>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mt-1 leading-relaxed">{p.tagline}</p>
                       </div>
 
                       {/* Video Status Badge */}
-                      <div className="pt-2">
+                      <div className="pt-1">
                         {hasVideo ? (
-                          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-[11px] font-medium">
-                            <Play className="w-3 h-3 fill-current" />
+                          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 dark:bg-rose-500/10 dark:border-rose-500/20 dark:text-rose-400 text-xs font-semibold">
+                            <Play className="w-3.5 h-3.5 fill-current text-rose-600" />
                             <span className="truncate max-w-[200px]">Video Demo Aktif</span>
                           </div>
                         ) : (
-                          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[11px]">
-                            <AlertTriangle className="w-3 h-3" />
+                          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400 text-xs">
+                            <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
                             <span>Belum ada video demo</span>
                           </div>
                         )}
                       </div>
                     </div>
 
-                    <div className="pt-3 border-t border-slate-800 flex items-center justify-between gap-2">
+                    <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
                       <button
                         onClick={() => openEditModal(p)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/30 text-indigo-300 text-xs font-semibold transition-colors"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-700 dark:bg-indigo-600/20 dark:hover:bg-indigo-600/30 dark:border-indigo-500/30 dark:text-indigo-300 text-xs font-bold transition-colors shadow-2xs"
                       >
                         <Edit className="w-3.5 h-3.5" />
-                        <span>Edit Link Video & Data</span>
+                        <span>Edit Video & Media</span>
                       </button>
 
                       <a
                         href={`/product/${p.slug}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-slate-400 hover:text-white text-xs font-medium inline-flex items-center gap-1"
+                        className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-white text-xs font-semibold inline-flex items-center gap-1"
                         title="Lihat halaman detail produk"
                       >
                         <Eye className="w-3.5 h-3.5" />
@@ -702,27 +712,27 @@ export default function AdminDashboardPage() {
         {/* Tab 4: Pengaturan Akun & Ganti Password */}
         {activeTab === 'profile' && (
           <div className="max-w-2xl mx-auto space-y-6">
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl space-y-6">
-              <div className="flex items-center gap-3 pb-4 border-b border-slate-800">
-                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center">
+            <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xl shadow-slate-100/80 dark:shadow-none space-y-6">
+              <div className="flex items-center gap-3.5 pb-5 border-b border-slate-100 dark:border-slate-800">
+                <div className="w-11 h-11 rounded-2xl bg-indigo-50 border border-indigo-200/80 dark:bg-indigo-500/10 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
                   <KeyRound className="w-5 h-5" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-white">Pengaturan Akun & Kata Sandi</h2>
-                  <p className="text-xs text-slate-400">Ubah email login, nama profil, dan perbarui kata sandi admin.</p>
+                  <h2 className="text-lg font-bold text-slate-900 dark:text-white">Pengaturan Akun & Kata Sandi</h2>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Ubah email login, nama profil, dan perbarui kata sandi admin.</p>
                 </div>
               </div>
 
               {profileSuccess && (
-                <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-300 text-xs flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                   <span>{profileSuccess}</span>
                 </div>
               )}
 
               {profileError && (
-                <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs flex items-center gap-2">
-                  <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
+                <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 dark:bg-rose-500/10 dark:border-rose-500/20 dark:text-rose-300 text-xs flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" />
                   <span>{profileError}</span>
                 </div>
               )}
@@ -730,86 +740,86 @@ export default function AdminDashboardPage() {
               <form onSubmit={handleUpdateProfile} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">Nama Lengkap Admin</label>
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Nama Lengkap Admin</label>
                     <input
                       type="text"
                       required
                       value={profileForm.name}
                       onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-none focus:border-indigo-500"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white text-xs shadow-2xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">Nomor WhatsApp / HP</label>
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Nomor WhatsApp / HP</label>
                     <input
                       type="text"
                       value={profileForm.phone}
                       onChange={(e) => setProfileForm({ ...profileForm, phone: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-none focus:border-indigo-500"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white text-xs shadow-2xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Email Login Admin</label>
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Email Login Admin</label>
                   <input
                     type="email"
                     required
                     value={profileForm.email}
                     onChange={(e) => setProfileForm({ ...profileForm, email: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white text-xs shadow-2xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
                   />
-                  <p className="text-[11px] text-slate-500 mt-1">Email ini akan digunakan untuk login berikutnya ke dashboard admin.</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Email ini akan digunakan untuk login berikutnya ke dashboard admin.</p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-800 space-y-4">
-                  <div className="flex items-center gap-2 text-indigo-400 text-xs font-bold uppercase tracking-wider">
+                <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-4">
+                  <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider">
                     <ShieldCheck className="w-4 h-4" />
                     <span>Ubah Kata Sandi (Opsional)</span>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">Kata Sandi Saat Ini (Lama)</label>
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Kata Sandi Saat Ini (Lama)</label>
                     <input
                       type="password"
                       placeholder="Masukkan kata sandi lama jika ingin mengganti sandi"
                       value={profileForm.current_password}
                       onChange={(e) => setProfileForm({ ...profileForm, current_password: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-none focus:border-indigo-500"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white text-xs shadow-2xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
                     />
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 mb-1">Kata Sandi Baru</label>
+                      <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Kata Sandi Baru</label>
                       <input
                         type="password"
                         placeholder="Minimal 6 karakter"
                         value={profileForm.new_password}
                         onChange={(e) => setProfileForm({ ...profileForm, new_password: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-none focus:border-indigo-500"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white text-xs shadow-2xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 mb-1">Ulangi Kata Sandi Baru</label>
+                      <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Ulangi Kata Sandi Baru</label>
                       <input
                         type="password"
                         placeholder="Konfirmasi kata sandi baru"
                         value={profileForm.confirm_password}
                         onChange={(e) => setProfileForm({ ...profileForm, confirm_password: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-none focus:border-indigo-500"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white text-xs shadow-2xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
                       />
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-slate-800 flex justify-end">
+                <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-end">
                   <button
                     type="submit"
                     disabled={profileLoading}
-                    className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all flex items-center gap-2 disabled:opacity-50 shadow-md shadow-indigo-600/20"
+                    className="px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all flex items-center gap-2 disabled:opacity-50 shadow-lg shadow-indigo-600/20"
                   >
                     {profileLoading ? (
                       <RefreshCw className="w-3.5 h-3.5 animate-spin" />
@@ -826,44 +836,44 @@ export default function AdminDashboardPage() {
 
         {/* Modal Edit Software & Video Demo */}
         {editingProduct && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full p-6 shadow-2xl my-8 space-y-5 max-h-[90vh] overflow-y-auto">
-              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm overflow-y-auto">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl my-8 space-y-5 max-h-[90vh] overflow-y-auto">
+              <div className="flex items-center justify-between pb-3.5 border-b border-slate-100 dark:border-slate-800">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-indigo-50 border border-indigo-200/80 dark:bg-indigo-500/10 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
                     <Edit className="w-4 h-4" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-white">Edit Software & Video Demo</h3>
-                    <p className="text-xs text-slate-400 font-mono">{editingProduct.product_code} • {editingProduct.name}</p>
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white">Edit Software & Video Demo</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">{editingProduct.product_code} • {editingProduct.name}</p>
                   </div>
                 </div>
 
                 <button
                   onClick={() => setEditingProduct(null)}
-                  className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                  className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-colors"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-4 h-4" />
                 </button>
               </div>
 
               {saveSuccessMessage && (
-                <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-300 text-xs flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                   <span>{saveSuccessMessage}</span>
                 </div>
               )}
 
               <form onSubmit={handleSaveProduct} className="space-y-4">
                 {/* 1. Video Tutorial / Demo URL Section */}
-                <div className="p-4 rounded-xl bg-slate-950/80 border border-indigo-500/30 space-y-3">
-                  <div className="flex items-center gap-2 text-indigo-400 text-xs font-bold uppercase tracking-wider">
-                    <Play className="w-4 h-4 fill-current text-red-500" />
+                <div className="p-5 rounded-2xl bg-gradient-to-br from-rose-50/40 via-white to-slate-50 dark:from-slate-950 dark:to-slate-900 border border-rose-200/70 dark:border-rose-500/20 space-y-3">
+                  <div className="flex items-center gap-2 text-rose-700 dark:text-rose-400 text-xs font-bold uppercase tracking-wider">
+                    <Play className="w-4 h-4 fill-current text-rose-600" />
                     <span>Link Video Demo YouTube (Embed Interaktif)</span>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1">
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                       URL Video YouTube Demo:
                     </label>
                     <input
@@ -871,21 +881,21 @@ export default function AdminDashboardPage() {
                       placeholder="Contoh: https://youtu.be/HAe2PFy6zjM atau https://www.youtube.com/watch?v=..."
                       value={editForm.video_tutorial_url}
                       onChange={(e) => setEditForm({ ...editForm, video_tutorial_url: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:outline-hidden focus:border-indigo-500 font-mono"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white text-xs shadow-2xs focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 font-mono"
                     />
-                    <p className="text-[11px] text-slate-400 mt-1">
-                      Masukkan URL video dari YouTube. Video ini akan otomatis ditampilkan sebagai pemutar video interaktif di halaman detail produk. Jika dikosongkan, pemutar video tidak akan ditampilkan.
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                      Masukkan URL video YouTube. Video ini otomatis muncul di pemutar interaktif halaman detail produk.
                     </p>
                   </div>
 
                   {/* Live YouTube Preview in Modal */}
                   {editForm.video_tutorial_url && (
                     <div className="pt-2">
-                      <span className="text-[11px] font-semibold text-slate-300 block mb-1.5">
+                      <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block mb-1.5">
                         Pratinjau Pemutar Video:
                       </span>
                       {getYouTubeEmbedUrl(editForm.video_tutorial_url) ? (
-                        <div className="relative aspect-video rounded-xl overflow-hidden bg-slate-900 border border-slate-800 max-h-56">
+                        <div className="relative aspect-video rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 dark:border-slate-800 max-h-56 shadow-md">
                           <iframe
                             src={getYouTubeEmbedUrl(editForm.video_tutorial_url)}
                             title="Pratinjau Video"
@@ -895,9 +905,9 @@ export default function AdminDashboardPage() {
                           ></iframe>
                         </div>
                       ) : (
-                        <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs flex items-center gap-2">
-                          <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
-                          <span>Format link video tidak terdeteksi sebagai YouTube yang valid. Gunakan format <code>https://youtu.be/ID</code> atau <code>https://youtube.com/watch?v=ID</code>.</span>
+                        <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-300 text-xs flex items-center gap-2">
+                          <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" />
+                          <span>Format link video tidak valid. Gunakan format <code>https://youtu.be/ID</code> atau <code>https://youtube.com/watch?v=ID</code>.</span>
                         </div>
                       )}
                     </div>
@@ -905,26 +915,26 @@ export default function AdminDashboardPage() {
                 </div>
 
                 {/* 2. Screenshots & Product Media Gallery */}
-                <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3">
+                <div className="p-5 rounded-2xl bg-slate-50/70 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800 space-y-3">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-indigo-400 text-xs font-bold uppercase tracking-wider">
-                      <ImageIcon className="w-4 h-4 text-sky-400" />
+                    <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider">
+                      <ImageIcon className="w-4 h-4 text-sky-600 dark:text-sky-400" />
                       <span>Screenshot Aplikasi & Media Galeri</span>
                     </div>
-                    <span className="text-[11px] text-slate-400">
+                    <span className="text-[11px] font-bold text-slate-600 dark:text-slate-400">
                       {editForm.media.length} Gambar terpasang
                     </span>
                   </div>
 
-                  <p className="text-[11px] text-slate-400">
-                    Unggah screenshot tampilan antarmuka (UI) software Anda atau masukkan tautan URL gambar. Gambar pertama (Posisi 1) akan otomatis dijadikan sebagai sampul utama produk.
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    Unggah screenshot UI software atau masukkan tautan URL gambar. Gambar pertama (Posisi 1) akan otomatis dijadikan sebagai sampul utama.
                   </p>
 
                   {/* Upload Controls */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                     {/* File Upload */}
                     <div>
-                      <label className="flex flex-col items-center justify-center p-3 rounded-xl border-2 border-dashed border-slate-700 hover:border-indigo-500 bg-slate-900/50 hover:bg-slate-900 cursor-pointer transition-all">
+                      <label className="flex flex-col items-center justify-center p-3 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-indigo-500 bg-white dark:bg-slate-900/50 hover:bg-slate-50 dark:hover:bg-slate-900 cursor-pointer transition-all shadow-2xs">
                         <input
                           type="file"
                           accept="image/*"
@@ -932,15 +942,15 @@ export default function AdminDashboardPage() {
                           disabled={uploadingImage}
                           className="hidden"
                         />
-                        <div className="flex items-center gap-2 text-xs font-semibold text-slate-300">
+                        <div className="flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300">
                           {uploadingImage ? (
-                            <RefreshCw className="w-4 h-4 text-indigo-400 animate-spin" />
+                            <RefreshCw className="w-4 h-4 text-indigo-600 dark:text-indigo-400 animate-spin" />
                           ) : (
-                            <Upload className="w-4 h-4 text-indigo-400" />
+                            <Upload className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                           )}
-                          <span>{uploadingImage ? 'Mengunggah...' : 'Upload Gambar dari Komputer'}</span>
+                          <span>{uploadingImage ? 'Mengunggah...' : 'Upload dari Komputer'}</span>
                         </div>
-                        <span className="text-[10px] text-slate-500 mt-0.5">PNG, JPG, WebP (Maks. 50MB)</span>
+                        <span className="text-[10px] text-slate-400 mt-0.5">PNG, JPG, WebP (Maks. 50MB)</span>
                       </label>
                     </div>
 
@@ -952,15 +962,15 @@ export default function AdminDashboardPage() {
                           placeholder="Atau tempel URL gambar (https://...)"
                           value={manualImageUrl}
                           onChange={(e) => setManualImageUrl(e.target.value)}
-                          className="flex-1 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs font-mono focus:outline-hidden focus:border-indigo-500"
+                          className="flex-1 px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-xs font-mono shadow-2xs focus:outline-none focus:border-indigo-500"
                         />
                         <button
                           type="button"
                           onClick={handleAddManualImage}
                           disabled={!manualImageUrl.trim()}
-                          className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold disabled:opacity-40 transition-colors"
+                          className="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold disabled:opacity-40 transition-colors shadow-2xs"
                         >
-                          <Plus className="w-3.5 h-3.5" />
+                          <Plus className="w-4 h-4" />
                         </button>
                       </div>
                       <input
@@ -968,7 +978,7 @@ export default function AdminDashboardPage() {
                         placeholder="Keterangan gambar (opsional)"
                         value={manualImageCaption}
                         onChange={(e) => setManualImageCaption(e.target.value)}
-                        className="w-full px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-[11px] focus:outline-hidden focus:border-indigo-500"
+                        className="w-full px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-[11px] shadow-2xs focus:outline-none focus:border-indigo-500"
                       />
                     </div>
                   </div>
@@ -979,11 +989,11 @@ export default function AdminDashboardPage() {
                       {editForm.media.map((m, idx) => (
                         <div
                           key={m.id || idx}
-                          className={`group relative rounded-xl overflow-hidden border bg-slate-900 ${
-                            idx === 0 ? 'border-indigo-500 ring-1 ring-indigo-500/50' : 'border-slate-800'
+                          className={`group relative rounded-2xl overflow-hidden border bg-white dark:bg-slate-900 shadow-xs ${
+                            idx === 0 ? 'border-indigo-600 ring-2 ring-indigo-500/20' : 'border-slate-200 dark:border-slate-800'
                           }`}
                         >
-                          <div className="relative aspect-video bg-slate-950">
+                          <div className="relative aspect-video bg-slate-100 dark:bg-slate-950">
                             <img
                               src={m.url}
                               alt={m.caption || 'Screenshot'}
@@ -997,7 +1007,7 @@ export default function AdminDashboardPage() {
                             )}
                           </div>
 
-                          <div className="p-2 space-y-1.5 bg-slate-900">
+                          <div className="p-2 space-y-1.5 bg-white dark:bg-slate-900">
                             <input
                               type="text"
                               value={m.caption}
@@ -1007,17 +1017,17 @@ export default function AdminDashboardPage() {
                                 newMedia[idx].caption = e.target.value;
                                 setEditForm({ ...editForm, media: newMedia });
                               }}
-                              className="w-full px-2 py-1 rounded bg-slate-950 border border-slate-800 text-[10px] text-white focus:outline-hidden focus:border-indigo-500"
+                              className="w-full px-2 py-1 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-[10px] text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                             />
 
-                            <div className="flex items-center justify-between pt-1 border-t border-slate-800">
+                            <div className="flex items-center justify-between pt-1 border-t border-slate-100 dark:border-slate-800">
                               <div className="flex items-center gap-1">
                                 <button
                                   type="button"
                                   disabled={idx === 0}
                                   onClick={() => handleMoveMedia(idx, idx - 1)}
-                                  className="p-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 disabled:opacity-30 text-[10px]"
-                                  title="Geser ke kiri / jadikan prioritas"
+                                  className="p-1 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 disabled:opacity-30 text-[10px]"
+                                  title="Geser ke kiri / jadikan sampul"
                                 >
                                   <ArrowUp className="w-3 h-3 -rotate-90" />
                                 </button>
@@ -1025,7 +1035,7 @@ export default function AdminDashboardPage() {
                                   type="button"
                                   disabled={idx === editForm.media.length - 1}
                                   onClick={() => handleMoveMedia(idx, idx + 1)}
-                                  className="p-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 disabled:opacity-30 text-[10px]"
+                                  className="p-1 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 disabled:opacity-30 text-[10px]"
                                   title="Geser ke kanan"
                                 >
                                   <ArrowDown className="w-3 h-3 -rotate-90" />
@@ -1035,7 +1045,7 @@ export default function AdminDashboardPage() {
                               <button
                                 type="button"
                                 onClick={() => handleRemoveMedia(idx)}
-                                className="p-1 rounded bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-[10px] flex items-center gap-1"
+                                className="p-1 rounded-md bg-rose-50 hover:bg-rose-100 text-rose-700 dark:bg-rose-500/10 dark:hover:bg-rose-500/20 dark:text-rose-400 text-[10px] flex items-center gap-1 font-semibold"
                                 title="Hapus gambar"
                               >
                                 <Trash2 className="w-3 h-3" />
@@ -1047,8 +1057,8 @@ export default function AdminDashboardPage() {
                       ))}
                     </div>
                   ) : (
-                    <div className="p-4 rounded-xl bg-slate-900/50 border border-slate-800/80 text-center">
-                      <p className="text-xs text-slate-400">Belum ada screenshot yang diunggah. Silakan upload gambar di atas.</p>
+                    <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800/80 text-center">
+                      <p className="text-xs text-slate-500 dark:text-slate-400">Belum ada screenshot yang diunggah. Silakan upload gambar di atas.</p>
                     </div>
                   )}
                 </div>
@@ -1056,112 +1066,112 @@ export default function AdminDashboardPage() {
                 {/* 3. Basic Info */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1">Nama Software</label>
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Nama Software</label>
                     <input
                       type="text"
                       required
                       value={editForm.name}
                       onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                      className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-hidden focus:border-indigo-500"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white text-xs shadow-2xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1">Versi</label>
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Versi</label>
                     <input
                       type="text"
                       value={editForm.version}
                       onChange={(e) => setEditForm({ ...editForm, version: e.target.value })}
-                      className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-hidden focus:border-indigo-500"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white text-xs shadow-2xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1">Tagline / Slogan</label>
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Tagline / Slogan</label>
                   <input
                     type="text"
                     value={editForm.tagline}
                     onChange={(e) => setEditForm({ ...editForm, tagline: e.target.value })}
-                    className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-hidden focus:border-indigo-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white text-xs shadow-2xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
                   />
                 </div>
 
                 {/* 3. Download Links */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                   <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1">Link Trial / Demo Installer</label>
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Link Trial / Demo Installer</label>
                     <input
                       type="url"
                       placeholder="https://downloads.../trial.exe"
                       value={editForm.trial_download_url}
                       onChange={(e) => setEditForm({ ...editForm, trial_download_url: e.target.value })}
-                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-hidden focus:border-indigo-500 font-mono"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white text-xs shadow-2xs focus:outline-none focus:border-indigo-500 font-mono"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1">Link Windows Installer (.exe)</label>
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Link Windows Installer (.exe)</label>
                     <input
                       type="url"
                       placeholder="https://downloads.../setup.exe"
                       value={editForm.windows_installer_url}
                       onChange={(e) => setEditForm({ ...editForm, windows_installer_url: e.target.value })}
-                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-hidden focus:border-indigo-500 font-mono"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white text-xs shadow-2xs focus:outline-none focus:border-indigo-500 font-mono"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1">Link Android APK (.apk)</label>
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Link Android APK (.apk)</label>
                     <input
                       type="url"
                       placeholder="https://downloads.../app.apk"
                       value={editForm.android_apk_url}
                       onChange={(e) => setEditForm({ ...editForm, android_apk_url: e.target.value })}
-                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-hidden focus:border-indigo-500 font-mono"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white text-xs shadow-2xs focus:outline-none focus:border-indigo-500 font-mono"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1">Link Panduan E-Book (PDF)</label>
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Link Panduan E-Book (PDF)</label>
                     <input
                       type="url"
                       placeholder="https://downloads.../panduan.pdf"
                       value={editForm.user_manual_pdf_url}
                       onChange={(e) => setEditForm({ ...editForm, user_manual_pdf_url: e.target.value })}
-                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:outline-hidden focus:border-indigo-500 font-mono"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white text-xs shadow-2xs focus:outline-none focus:border-indigo-500 font-mono"
                     />
                   </div>
                 </div>
 
                 {/* 4. Toggles */}
                 <div className="flex items-center gap-6 pt-2">
-                  <label className="flex items-center gap-2 cursor-pointer text-xs text-slate-300">
+                  <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-slate-700 dark:text-slate-300">
                     <input
                       type="checkbox"
                       checked={editForm.is_published === 1}
                       onChange={(e) => setEditForm({ ...editForm, is_published: e.target.checked ? 1 : 0 })}
-                      className="w-4 h-4 rounded-sm bg-slate-950 border-slate-800 text-indigo-600 focus:ring-indigo-500"
+                      className="w-4 h-4 rounded-sm text-indigo-600 focus:ring-indigo-500 border-slate-300"
                     />
                     <span>Publikasikan di Marketplace (Aktif)</span>
                   </label>
 
-                  <label className="flex items-center gap-2 cursor-pointer text-xs text-slate-300">
+                  <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-slate-700 dark:text-slate-300">
                     <input
                       type="checkbox"
                       checked={editForm.is_featured === 1}
                       onChange={(e) => setEditForm({ ...editForm, is_featured: e.target.checked ? 1 : 0 })}
-                      className="w-4 h-4 rounded-sm bg-slate-950 border-slate-800 text-indigo-600 focus:ring-indigo-500"
+                      className="w-4 h-4 rounded-sm text-indigo-600 focus:ring-indigo-500 border-slate-300"
                     />
                     <span>Produk Unggulan (Featured)</span>
                   </label>
                 </div>
 
-                <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+                <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
                   <button
                     type="button"
                     onClick={() => setEditingProduct(null)}
-                    className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-colors"
+                    className="px-4 py-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors"
                   >
                     Batal
                   </button>
@@ -1169,7 +1179,7 @@ export default function AdminDashboardPage() {
                   <button
                     type="submit"
                     disabled={savingProduct}
-                    className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all flex items-center gap-2 disabled:opacity-50 shadow-md shadow-indigo-600/20"
+                    className="px-6 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all flex items-center gap-2 disabled:opacity-50 shadow-lg shadow-indigo-600/25"
                   >
                     {savingProduct ? (
                       <RefreshCw className="w-3.5 h-3.5 animate-spin" />
