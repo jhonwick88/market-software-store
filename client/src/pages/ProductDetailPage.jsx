@@ -249,8 +249,8 @@ export default function ProductDetailPage() {
                 </div>
               )}
 
-              {/* Product Screenshot / Video Frame */}
-              <div className="relative aspect-video rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xl shadow-slate-200/60 dark:shadow-none">
+              {/* Product Screenshot / Video Frame with Zoom Feature */}
+              <div className="relative aspect-video rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xl shadow-slate-200/60 dark:shadow-none group">
                 {activeMediaTab === 'video' && youtubeEmbedUrl ? (
                   <iframe
                     src={youtubeEmbedUrl}
@@ -260,39 +260,86 @@ export default function ProductDetailPage() {
                     className="w-full h-full border-0"
                   ></iframe>
                 ) : (
-                  <img 
-                    src={product.media && product.media[selectedImageIndex] ? product.media[selectedImageIndex].url : primaryMedia} 
-                    alt={`Tampilan Aplikasi ${product.name} - Software PintarLabs`}
-                    title={product.media && product.media[selectedImageIndex]?.caption || product.name}
-                    onError={(e) => handleImageError(e, '/images/pintarpos_resto.jpg')}
-                    className="w-full h-full object-cover transition-all duration-300"
-                  />
+                  <>
+                    <img 
+                      src={product.media && product.media[selectedImageIndex] ? product.media[selectedImageIndex].url : primaryMedia} 
+                      alt={`Tampilan Aplikasi ${product.name} - Software PintarLabs`}
+                      title={product.media && product.media[selectedImageIndex]?.caption || product.name}
+                      onError={(e) => handleImageError(e, '/images/pintarpos_resto.jpg')}
+                      className="w-full h-full object-cover transition-all duration-300 group-hover:scale-102"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4 pointer-events-none">
+                      <p className="text-white text-xs font-semibold drop-shadow-md">
+                        {product.media && product.media[selectedImageIndex]?.caption || product.name}
+                      </p>
+                    </div>
+                  </>
                 )}
               </div>
 
               {/* Thumbnail Strip if Multiple Screenshots */}
               {activeMediaTab === 'screenshot' && product.media && product.media.length > 1 && (
-                <div className="flex items-center gap-3 overflow-x-auto pb-2 pt-1">
-                  {product.media.map((m, idx) => (
-                    <button
-                      key={m.id || idx}
-                      onClick={() => setSelectedImageIndex(idx)}
-                      className={`relative shrink-0 w-24 h-15 sm:w-28 sm:h-18 rounded-2xl overflow-hidden border-2 transition-all ${
-                        selectedImageIndex === idx
-                          ? 'border-indigo-600 ring-4 ring-indigo-500/20 shadow-lg shadow-indigo-500/15 scale-105'
-                          : 'border-slate-200 dark:border-slate-800 opacity-60 hover:opacity-100 hover:border-slate-300'
-                      }`}
-                    >
-                      <img
-                        src={m.url}
-                        alt={m.caption || `Screenshot ${idx + 1}`}
-                        onError={(e) => handleImageError(e, '/images/pintarpos_resto.jpg')}
-                        className="w-full h-full object-cover"
-                      />
-                    </button>
-                  ))}
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-3 overflow-x-auto pb-2 pt-1">
+                    {product.media.map((m, idx) => (
+                      <button
+                        key={m.id || idx}
+                        onClick={() => setSelectedImageIndex(idx)}
+                        className={`relative shrink-0 w-24 h-15 sm:w-28 sm:h-18 rounded-2xl overflow-hidden border-2 transition-all cursor-pointer ${
+                          selectedImageIndex === idx
+                            ? 'border-indigo-600 ring-4 ring-indigo-500/20 shadow-lg shadow-indigo-500/15 scale-105 opacity-100'
+                            : 'border-slate-200 dark:border-slate-800 opacity-60 hover:opacity-100 hover:border-slate-300'
+                        }`}
+                      >
+                        <img
+                          src={m.url}
+                          alt={m.caption || `Screenshot ${idx + 1}`}
+                          onError={(e) => handleImageError(e, '/images/pintarpos_resto.jpg')}
+                          className="w-full h-full object-cover"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 italic">
+                    💡 Klik thumbnail di atas untuk melihat pratinjau {product.media.length} screenshot tampilan aplikasi secara lengkap.
+                  </p>
                 </div>
               )}
+            </div>
+
+            {/* Key Value Propositions / USP Cards (Anti-Bocor, 100% Offline, Multi-Device, Lifetime) */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="p-4 rounded-2xl bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent border border-emerald-500/20 text-left">
+                <div className="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 flex items-center justify-center font-bold mb-2">
+                  ⚡
+                </div>
+                <h4 className="text-xs font-bold text-slate-900 dark:text-white">100% Offline</h4>
+                <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">Bebas kuota, tanpa butuh internet</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/20 text-left">
+                <div className="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 flex items-center justify-center font-bold mb-2">
+                  🛡️
+                </div>
+                <h4 className="text-xs font-bold text-slate-900 dark:text-white">Anti-Bocor Kas</h4>
+                <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">Rekonsiliasi shift laci kasir</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-gradient-to-br from-sky-500/10 via-sky-500/5 to-transparent border border-sky-500/20 text-left">
+                <div className="w-8 h-8 rounded-xl bg-sky-100 dark:bg-sky-500/20 text-sky-700 dark:text-sky-400 flex items-center justify-center font-bold mb-2">
+                  📱
+                </div>
+                <h4 className="text-xs font-bold text-slate-900 dark:text-white">Multi-Device LAN</h4>
+                <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">PC Windows + HP Android</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-500/10 via-purple-500/5 to-transparent border border-purple-500/20 text-left">
+                <div className="w-8 h-8 rounded-xl bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-400 flex items-center justify-center font-bold mb-2">
+                  💎
+                </div>
+                <h4 className="text-xs font-bold text-slate-900 dark:text-white">1x Bayar Selamanya</h4>
+                <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">Tanpa sewa bulanan / komisi</p>
+              </div>
             </div>
 
             {/* Description & Features Section */}
@@ -309,7 +356,7 @@ export default function ProductDetailPage() {
                 </div>
               </div>
 
-              <div className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed whitespace-pre-line">
+              <div className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed whitespace-pre-line font-normal">
                 {product.description}
               </div>
 

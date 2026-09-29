@@ -45,8 +45,8 @@ async function seedDatabase() {
       category_id: 'cat-pos',
       slug: 'pintarpos-resto-retail',
       name: 'PintarPOS Resto & Retail Ultimate',
-      tagline: 'Software Kasir Lengkap Windows & Android Tanpa Langganan Bulanan',
-      description: 'PintarPOS adalah aplikasi kasir (Point of Sale) modern siap pakai yang dirancang khusus untuk toko retail, restoran, kafe, apotek, dan minimarket. Mendukung operasional kasir di PC Windows sekaligus waiter/kasir keliling menggunakan HP/Tablet Android. Data tersinkronisasi otomatis, cetak struk thermal via Bluetooth & USB, serta laporan penjualan real-time tanpa ribet.',
+      tagline: 'Software Kasir Cepat, 100% Offline Tanpa Internet & Sistem Rekonsiliasi Kas Anti-Bocor',
+      description: 'PintarPOS adalah aplikasi kasir pintar (Point of Sale) modern berbasis Local-First yang dirancang khusus untuk toko retail, minimarket, restoran, kafe, apotek, dan UMKM.\n\n🚀 KEUNGGULAN UTAMA PINTARPOS:\n1. 100% Bebas Kuota & Internet (Offline-Ready)\nSemua proses transaksi kasir, scan barcode, cetak nota struk, hingga sinkronisasi multi-device berjalan mulus di jaringan lokal Wi-Fi toko Anda tanpa membutuhkan koneksi internet atau kuota data sama sekali.\n\n2. Sistem Rekonsiliasi Kas Laci (Anti-Bocor & Anti-Tekor)\nSetiap pergantian shift atau saat tutup toko, kasir cukup menginput jumlah uang fisik yang ada di laci. Sistem akan langsung memvalidasi dan mencocokkannya dengan perhitungan omset & pengeluaran kas (petty cash) sehingga selisih kas langsung terdeteksi seketika.\n\n3. Sinkronisasi Multi-Device Jaringan Lokal (LAN / Wi-Fi)\nHubungkan Komputer PC kasir utama dengan Tablet / HP Android pelayan (waiter) secara instan tanpa lag. Pesanan dari meja customer langsung tercatat dan dapat dicetak ke printer dapur.\n\n4. Beli 1x Pakai Seumur Hidup (Lifetime License)\nBebas biaya langganan bulanan atau tahunan. 100% keuntungan penjualan toko adalah milik Anda tanpa potongan komisi per transaksi.\n\n5. Cetak Struk Cepat & Fleksibel\nKompatibel dengan semua merk printer thermal 58mm & 80mm (USB, Bluetooth, LAN). Dilengkapi opsi cetak rangkap, custom header/footer nota, dan auto cash drawer kick (buka laci otomatis).\n\n6. Manajemen Inventori & Peringatan Stok Menipis\nPencatatan stok otomatis berkurang saat transaksi, histori mutasi barang, input barcode massal, dan notifikasi saat barang hampir habis.',
       platforms: ['windows', 'android'],
       min_requirements: {
         windows: 'Windows 10/11 64-bit, RAM 4GB, Storage 500MB',
@@ -55,17 +55,18 @@ async function seedDatabase() {
       hardware_compat: [
         'Printer Thermal 58mm & 80mm (Bluetooth / USB / LAN)',
         'Barcode Scanner 1D & 2D QR Code',
-        'Laci Uang (Cash Drawer RJ11)',
-        'Customer Display Pole'
+        'Laci Uang Otomatis (Cash Drawer RJ11)',
+        'Komputer PC Windows / Laptop',
+        'Smartphone & Tablet Android (Multi-Device)'
       ],
-      version: 'v3.2.0',
+      version: 'v3.5.0',
       is_published: 1,
       is_featured: 1,
-      sales_count: 184,
+      sales_count: 348,
       rating: 4.95,
-      review_count: 36,
-      windows_installer_url: 'https://downloads.pintarlabs.id/pos/PintarPOS_Setup_v3.2.exe',
-      android_apk_url: 'https://downloads.pintarlabs.id/pos/PintarPOS_v3.2.apk',
+      review_count: 194,
+      windows_installer_url: 'https://downloads.pintarlabs.id/pos/PintarPOS_Setup_v3.5.exe',
+      android_apk_url: 'https://downloads.pintarlabs.id/pos/PintarPOS_v3.5.apk',
       user_manual_pdf_url: 'https://downloads.pintarlabs.id/pos/Panduan_Lengkap_PintarPOS.pdf',
       video_tutorial_url: 'https://youtu.be/HAe2PFy6zjM',
       trial_download_url: 'https://downloads.pintarlabs.id/pos/PintarPOS_Demo_Trial.exe',
@@ -111,16 +112,26 @@ async function seedDatabase() {
         }
       ],
       features: [
-        { code: 'pos_cashier', name: 'Modul Kasir & Transaksi Cepat', group_name: 'Modul Kasir', description: 'Proses kasir kilat dengan barcode scanner, diskon, pajak, opsi takeaway/dine-in, dan split bill.' },
-        { code: 'thermal_print', name: 'Cetak Struk & Kitchen Order', group_name: 'Pencetakan', description: 'Cetak struk belanja kasir dan tiket pesanan langsung ke printer dapur secara bersamaan.' },
-        { code: 'inventory_sync', name: 'Pengurangan Stok Otomatis (FIFO)', group_name: 'Inventori', description: 'Stok barang berkurang otomatis saat terjadi penjualan kasir. Dilengkapi peringatan stok menipis.' },
-        { code: 'payment_qris', name: 'Multi Metode Pembayaran & QRIS Dinamis', group_name: 'Pembayaran', description: 'Menerima pembayaran Tunai, Kartu Debit, Transfer Bank, dan QRIS otomatis.' },
-        { code: 'reports_realtime', name: 'Laporan Laba/Rugi & Rekap Kasir', group_name: 'Laporan', description: 'Laporan omset harian, barang terlaris (top product), profit bersih, dan rekap shift kasir.' },
-        { code: 'cloud_sync', name: 'Sinkronisasi Otomatis Windows + Android', group_name: 'Konektivitas', description: 'Hubungkan PC kasir utama dan HP pelayan secara lokal (Wi-Fi) tanpa internet sekalipun.' }
+        { code: 'pos_cashier', name: 'Modul Kasir Cepat & Scan Barcode', group_name: 'Transaksi Kasir', description: 'Pencarian produk kilat, scan barcode 1D/2D, diskon, opsi takeaway/dine-in, dan shortcut keyboard tanpa mouse.' },
+        { code: 'cash_reconciliation', name: 'Rekonsiliasi Kas Laci Shift (Anti-Bocor)', group_name: 'Keamanan Kas', description: 'Validasi uang fisik di laci kasir vs perhitungan sistem saat tutup shift kasir untuk mencegah uang kasir tekor.' },
+        { code: 'multidevice_lan', name: 'Multi-Device LAN (PC Windows + HP Android)', group_name: 'Konektivitas', description: 'Hubungkan PC kasir utama dan smartphone/tablet waiter secara instan di jaringan Wi-Fi lokal toko tanpa internet.' },
+        { code: 'thermal_printer', name: 'Cetak Struk Thermal 58mm & 80mm', group_name: 'Pencetakan', description: 'Cetak nota struk via USB & Bluetooth, dukung cetak rangkap, custom logo toko, dan auto kick laci kasir.' },
+        { code: 'inventory_control', name: 'Manajemen Inventori & Stok Otomatis', group_name: 'Inventori', description: 'Pengurangan stok otomatis saat transaksi, peringatan stok menipis, dan histori mutasi barang masuk/keluar.' },
+        { code: 'multi_payment', name: 'Multi Metode Pembayaran & QRIS', group_name: 'Pembayaran', description: 'Menerima pembayaran Tunai dengan kalkulator kembalian otomatis, Transfer Bank, Debit, dan QRIS.' },
+        { code: 'analytics_dashboard', name: 'Dashboard Analitik & Laporan Laba Bersih', group_name: 'Laporan', description: 'Laporan omset harian, produk terlaris, laba/rugi kotor dan bersih, serta grafik penjualan real-time.' },
+        { code: 'backup_vault', name: 'Backup Otomatis 1-Klik & Data Aman', group_name: 'Keamanan Data', description: 'Cadangkan database toko secara lokal ke flashdisk atau folder aman untuk perlindungan maksimal data Anda.' }
       ],
       media: [
-        { type: 'thumbnail', url: 'https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=800&q=80', caption: 'PintarPOS Dashboard & Cashier View', sort_order: 1 },
-        { type: 'banner', url: 'https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=1400&q=80', caption: 'PintarPOS Banner Showcase', sort_order: 2 }
+        { type: 'screenshot', url: '/images/pintarpos/pos_utama.png', caption: 'Tampilan POS Utama - Kasir Kilat, Scan Barcode & Keranjang Belanja', sort_order: 1 },
+        { type: 'screenshot', url: '/images/pintarpos/dashboard_analitik.png', caption: 'Dashboard Analitik - Total Pendapatan, Grafik Penjualan & Produk Terlaris', sort_order: 2 },
+        { type: 'screenshot', url: '/images/pintarpos/inventori_stok.png', caption: 'Manajemen Inventori - Data Master Produk & Kontrol Stok POS', sort_order: 3 },
+        { type: 'screenshot', url: '/images/pintarpos/rekonsiliasi_kas.png', caption: 'Rekonsiliasi Kas Laci - Validasi Shift Kasir & Pencegahan Selisih Kas', sort_order: 4 },
+        { type: 'screenshot', url: '/images/pintarpos/riwayat_struk.png', caption: 'Riwayat Transaksi - Cetak Ulang Struk & Pembatalan Transaksi', sort_order: 5 },
+        { type: 'screenshot', url: '/images/pintarpos/pengaturan_printer.png', caption: 'Pengaturan Printer - Dukungan Thermal 58mm & 80mm USB / Bluetooth', sort_order: 6 },
+        { type: 'screenshot', url: '/images/pintarpos/pengaturan_sistem.png', caption: 'Pengaturan Sistem - Quick Item, Mode Terang & Integrasi Cash Drawer', sort_order: 7 },
+        { type: 'screenshot', url: '/images/pintarpos/proses_bayar.png', caption: 'Proses Pembayaran - Hitung Kembalian Cepat, Tunai & Non-Tunai / QRIS', sort_order: 8 },
+        { type: 'screenshot', url: '/images/pintarpos/shortcut_keyboard.png', caption: 'Panduan Shortcut Keyboard - Transaksi Kasir Kilat Tanpa Mouse', sort_order: 9 },
+        { type: 'screenshot', url: '/images/pintarpos/multi_pc.png', caption: 'Dukungan Multi-Device - PC Windows Kasir, Tablet & HP Android Waiter Terhubung', sort_order: 10 }
       ],
       reviews: [
         { customer_name: 'Budi Santoso', business_name: 'Kopi Kenangan Senja (Bandung)', rating: 5, comment: 'Aplikasi kasir paling stabil yang pernah saya pakai. Sambung ke printer thermal bluetooth lancar jaya di HP Android.' },
