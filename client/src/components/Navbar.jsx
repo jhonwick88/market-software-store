@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Layers, PackageCheck, MessageCircle, Lock, Sun, Moon } from 'lucide-react';
+import { Layers, PackageCheck, MessageCircle, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../ThemeContext';
 
 export default function Navbar() {
@@ -58,17 +58,6 @@ export default function Navbar() {
             >
               <PackageCheck className="w-3.5 h-3.5" />
               <span>Lacak Pesanan</span>
-            </Link>
-            <Link
-              to="/admin"
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
-                location.pathname === '/admin' 
-                  ? 'bg-white text-indigo-600 shadow-sm dark:bg-indigo-600 dark:text-white dark:shadow-md' 
-                  : 'text-slate-500 hover:text-slate-800 hover:bg-white/60 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800'
-              }`}
-            >
-              <Lock className="w-3.5 h-3.5" />
-              <span>Admin Toko</span>
             </Link>
           </div>
 
