@@ -122,16 +122,17 @@ async function seedDatabase() {
         { code: 'backup_vault', name: 'Backup Otomatis 1-Klik & Data Aman', group_name: 'Keamanan Data', description: 'Cadangkan database toko secara lokal ke flashdisk atau folder aman untuk perlindungan maksimal data Anda.' }
       ],
       media: [
-        { type: 'screenshot', url: '/images/pintarpos/pos_utama.png', caption: 'Tampilan POS Utama - Kasir Kilat, Scan Barcode & Keranjang Belanja', sort_order: 1 },
-        { type: 'screenshot', url: '/images/pintarpos/dashboard_analitik.png', caption: 'Dashboard Analitik - Total Pendapatan, Grafik Penjualan & Produk Terlaris', sort_order: 2 },
-        { type: 'screenshot', url: '/images/pintarpos/inventori_stok.png', caption: 'Manajemen Inventori - Data Master Produk & Kontrol Stok POS', sort_order: 3 },
-        { type: 'screenshot', url: '/images/pintarpos/rekonsiliasi_kas.png', caption: 'Rekonsiliasi Kas Laci - Validasi Shift Kasir & Pencegahan Selisih Kas', sort_order: 4 },
-        { type: 'screenshot', url: '/images/pintarpos/riwayat_struk.png', caption: 'Riwayat Transaksi - Cetak Ulang Struk & Pembatalan Transaksi', sort_order: 5 },
-        { type: 'screenshot', url: '/images/pintarpos/pengaturan_printer.png', caption: 'Pengaturan Printer - Dukungan Thermal 58mm & 80mm USB / Bluetooth', sort_order: 6 },
-        { type: 'screenshot', url: '/images/pintarpos/pengaturan_sistem.png', caption: 'Pengaturan Sistem - Quick Item, Mode Terang & Integrasi Cash Drawer', sort_order: 7 },
-        { type: 'screenshot', url: '/images/pintarpos/proses_bayar.png', caption: 'Proses Pembayaran - Hitung Kembalian Cepat, Tunai & Non-Tunai / QRIS', sort_order: 8 },
-        { type: 'screenshot', url: '/images/pintarpos/shortcut_keyboard.png', caption: 'Panduan Shortcut Keyboard - Transaksi Kasir Kilat Tanpa Mouse', sort_order: 9 },
-        { type: 'screenshot', url: '/images/pintarpos/multi_pc.png', caption: 'Dukungan Multi-Device - PC Windows Kasir, Tablet & HP Android Waiter Terhubung', sort_order: 10 }
+        { type: 'thumbnail', url: '/images/promos/pintarpos_promo_banner.jpg', caption: 'PintarPOS Resto & Retail - 100% Offline & Anti-Bocor Kas', sort_order: 1 },
+        { type: 'screenshot', url: '/images/pintarpos/pos_utama.png', caption: 'Tampilan POS Utama - Kasir Kilat, Scan Barcode & Keranjang Belanja', sort_order: 2 },
+        { type: 'screenshot', url: '/images/pintarpos/dashboard_analitik.png', caption: 'Dashboard Analitik - Total Pendapatan, Grafik Penjualan & Produk Terlaris', sort_order: 3 },
+        { type: 'screenshot', url: '/images/pintarpos/inventori_stok.png', caption: 'Manajemen Inventori - Data Master Produk & Kontrol Stok POS', sort_order: 4 },
+        { type: 'screenshot', url: '/images/pintarpos/rekonsiliasi_kas.png', caption: 'Rekonsiliasi Kas Laci - Validasi Shift Kasir & Pencegahan Selisih Kas', sort_order: 5 },
+        { type: 'screenshot', url: '/images/pintarpos/riwayat_struk.png', caption: 'Riwayat Transaksi - Cetak Ulang Struk & Pembatalan Transaksi', sort_order: 6 },
+        { type: 'screenshot', url: '/images/pintarpos/pengaturan_printer.png', caption: 'Pengaturan Printer - Dukungan Thermal 58mm & 80mm USB / Bluetooth', sort_order: 7 },
+        { type: 'screenshot', url: '/images/pintarpos/pengaturan_sistem.png', caption: 'Pengaturan Sistem - Quick Item, Mode Terang & Integrasi Cash Drawer', sort_order: 8 },
+        { type: 'screenshot', url: '/images/pintarpos/proses_bayar.png', caption: 'Proses Pembayaran - Hitung Kembalian Cepat, Tunai & Non-Tunai / QRIS', sort_order: 9 },
+        { type: 'screenshot', url: '/images/pintarpos/shortcut_keyboard.png', caption: 'Panduan Shortcut Keyboard - Transaksi Kasir Kilat Tanpa Mouse', sort_order: 10 },
+        { type: 'screenshot', url: '/images/pintarpos/multi_pc.png', caption: 'Dukungan Multi-Device - PC Windows Kasir, Tablet & HP Android Waiter Terhubung', sort_order: 11 }
       ],
       reviews: [
         { customer_name: 'Budi Santoso', business_name: 'Kopi Kenangan Senja (Bandung)', rating: 5, comment: 'Aplikasi kasir paling stabil yang pernah saya pakai. Sambung ke printer thermal bluetooth lancar jaya di HP Android.' },
@@ -194,7 +195,7 @@ async function seedDatabase() {
         { code: 'barcode_print', name: 'Generator & Cetak Label Barcode / QR', group_name: 'Labeling', description: 'Cetak label stiker barcode produk sendiri dengan ukuran custom.' }
       ],
       media: [
-        { type: 'thumbnail', url: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80', caption: 'PintarStock Warehouse Management', sort_order: 1 }
+        { type: 'thumbnail', url: '/images/promos/pintarstock_promo_banner.jpg', caption: 'PintarStock - Manajemen Stok Gudang & Scan Barcode Kamera HP', sort_order: 1 }
       ],
       reviews: [
         { customer_name: 'Hendra Gunawan', business_name: 'CV. Maju Logistik', rating: 5, comment: 'Fitur scan barcode pakai kamera HP Android-nya sangat membantu saat opname bulanan.' }
@@ -359,7 +360,7 @@ Investasi cerdas sekali bayar tanpa biaya perpanjangan tahunan. Disertai garansi
         { code: 'wa_invoice', name: 'Broadcast Pengingat Tagihan via WhatsApp', group_name: 'Notifikasi', description: 'Kirim rincian tagihan dan bukti pembayaran langsung ke nomor WA orang tua.' }
       ],
       media: [
-        { type: 'thumbnail', url: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=800&q=80', caption: 'PintarSchool Admin & Student Portal', sort_order: 1 }
+        { type: 'thumbnail', url: '/images/promos/pintarschool_promo_banner.jpg', caption: 'PintarSchool - Aplikasi SPP Sekolah & Notifikasi WhatsApp', sort_order: 1 }
       ],
       reviews: [
         { customer_name: 'Ustadz Ahmad Fauzi', business_name: 'Ponpes Darul Hikmah', rating: 5, comment: 'Laporan keuangan SPP jadi sangat tertib. Orang tua santri senang dapat notifikasi rincian pembayaran.' }
@@ -407,7 +408,7 @@ Investasi cerdas sekali bayar tanpa biaya perpanjangan tahunan. Disertai garansi
         { code: 'cashflow', name: 'Buku Kas Masuk, Keluar & Piutang', group_name: 'Kas', description: 'Pantau siapa saja klien yang belum lunas serta tanggal jatuh tempo pembayaran.' }
       ],
       media: [
-        { type: 'thumbnail', url: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80', caption: 'PintarInvoice Dashboard', sort_order: 1 }
+        { type: 'thumbnail', url: '/images/promos/pintarinvoice_promo_banner.jpg', caption: 'PintarInvoice - Faktur PDF & Buku Kas Keuangan Usaha', sort_order: 1 }
       ],
       reviews: [
         { customer_name: 'Dewi Lestari', business_name: 'Studio Desain Kreatif', rating: 5, comment: 'Bikin invoice klien jadi jauh lebih cepat dan terlihat sangat profesional.' }
