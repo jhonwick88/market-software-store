@@ -10,7 +10,7 @@ import AdminDashboardPage from './pages/AdminDashboardPage';
 
 export default function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 font-sans selection:bg-indigo-500 selection:text-white">
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800 dark:bg-[#0B0F19] dark:text-slate-100 font-sans selection:bg-indigo-500 selection:text-white transition-colors duration-200">
       <Navbar />
       <main className="flex-1">
         <Routes>
