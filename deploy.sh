@@ -23,6 +23,22 @@ echo " 🔌 Backend API: https://$BACKEND_DOMAIN"
 echo "=========================================================="
 
 # ------------------------------------------------------------------------------
+# 0. Optimalisasi RAM (Auto Setup 2GB Swap jika RAM 1GB)
+# ------------------------------------------------------------------------------
+TOTAL_SWAP=$(free -m | awk '/^Swap:/ {print $2}')
+if [ -z "$TOTAL_SWAP" ] || [ "$TOTAL_SWAP" -lt 1000 ]; then
+    echo "💾 [0/5] RAM 1GB terdeteksi: Menyiapkan 2GB Swap Memory agar build lancar..."
+    sudo fallocate -l 2G /swapfile 2>/dev/null || sudo dd if=/dev/zero of=/swapfile bs=1M count=2048
+    sudo chmod 600 /swapfile
+    sudo mkswap /swapfile
+    sudo swapon /swapfile || true
+    if ! grep -q '/swapfile' /etc/fstab; then
+        echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+    fi
+    echo "✅ Swap Memory 2GB berhasil diaktifkan!"
+fi
+
+# ------------------------------------------------------------------------------
 # 1. Periksa & Install Node.js 20 LTS & PM2
 # ------------------------------------------------------------------------------
 if ! command -v node &> /dev/null; then
