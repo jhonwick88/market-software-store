@@ -44,6 +44,7 @@ export default function Footer() {
           <div>
             <h4 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-4">Layanan & Bantuan</h4>
             <ul className="space-y-2.5 text-xs text-slate-600 dark:text-slate-400">
+              <li><Link to="/docs" className="hover:text-indigo-600 dark:hover:text-white transition-colors font-semibold text-indigo-600 dark:text-indigo-400">📚 Pusat Panduan & Docs</Link></li>
               <li><Link to="/track" className="hover:text-indigo-600 dark:hover:text-white transition-colors">Lacak Status Pesanan</Link></li>
               <li>
                 <a 

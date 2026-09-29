@@ -33,6 +33,8 @@ app.get(['/sitemap.xml', '/api/sitemap.xml'], async (req, res) => {
     const staticRoutes = [
       { url: `${siteUrl}/`, priority: '1.0', changefreq: 'daily' },
       { url: `${siteUrl}/explore`, priority: '0.9', changefreq: 'daily' },
+      { url: `${siteUrl}/docs`, priority: '0.85', changefreq: 'weekly' },
+      { url: `${siteUrl}/panduan`, priority: '0.85', changefreq: 'weekly' },
       { url: `${siteUrl}/track`, priority: '0.7', changefreq: 'weekly' }
     ];
 

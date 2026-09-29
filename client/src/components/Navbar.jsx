@@ -49,6 +49,17 @@ export default function Navbar() {
               Jelajahi Software
             </Link>
             <Link
+              to="/docs"
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                location.pathname === '/docs' || location.pathname === '/panduan'
+                  ? 'bg-white text-indigo-600 shadow-sm dark:bg-indigo-600 dark:text-white dark:shadow-md' 
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800'
+              }`}
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Pusat Panduan</span>
+            </Link>
+            <Link
               to="/track"
               className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
                 location.pathname === '/track' || location.pathname === '/portal'

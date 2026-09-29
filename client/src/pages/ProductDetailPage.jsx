@@ -4,7 +4,8 @@ import axios from 'axios';
 import { 
   Check, Star, ShieldCheck, Download, Monitor, Smartphone, 
   ChevronRight, Zap, RefreshCw, AlertCircle, ShoppingCart,
-  Play, Video, ExternalLink, Image as ImageIcon, Volume2, VolumeX, Music, Radio
+  Play, Video, ExternalLink, Image as ImageIcon, Volume2, VolumeX, Music, Radio,
+  MessageCircle, Headphones, Lock, Sparkles
 } from 'lucide-react';
 import SEO from '../components/SEO';
 import { handleImageError } from '../utils/imageFallback';
@@ -696,62 +697,93 @@ export default function ProductDetailPage() {
                 })}
               </div>
 
-              <button
-                onClick={() => setShowCheckout(true)}
-                disabled={!selectedPlan}
-                className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-extrabold text-sm shadow-lg shadow-indigo-600/25 hover:shadow-indigo-600/35 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
-              >
-                <Zap className="w-4 h-4 fill-current" />
-                <span>Beli Sekarang ({selectedPlan ? formatRupiah(selectedPlan.price) : 'Pilih Paket'})</span>
-              </button>
+              <div className="space-y-2.5">
+                <button
+                  onClick={() => setShowCheckout(true)}
+                  disabled={!selectedPlan}
+                  className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-extrabold text-sm shadow-lg shadow-indigo-600/25 hover:shadow-indigo-600/35 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+                >
+                  <Zap className="w-4 h-4 fill-current" />
+                  <span>Beli Sekarang (Invoice Otomatis)</span>
+                </button>
 
-              {/* Trial Download Link */}
-              {product.trial_download_url && (
+                {/* Direct WhatsApp Fast Order */}
                 <a
-                  href={product.trial_download_url}
+                  href={`https://wa.me/6282132935169?text=${encodeURIComponent(
+                    `Halo Admin PintarLabs, saya ingin pesan software:\n\n` +
+                    `📦 Produk: ${product.name}\n` +
+                    `🏷️ Paket: ${selectedPlan?.name || 'Lisensi'}\n` +
+                    `💰 Harga: ${selectedPlan ? formatRupiah(selectedPlan.price) : 'Sesuai Paket'}\n\n` +
+                    `Mohon dibantu info pembayaran & aktivasi lisensinya ya. Terima kasih!`
+                  )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full mt-3 py-3 rounded-2xl bg-slate-50 hover:bg-slate-100 text-slate-800 dark:bg-slate-800/80 dark:hover:bg-slate-800 dark:text-slate-200 text-xs font-bold transition-all flex items-center justify-center gap-2 border border-slate-200/90 dark:border-slate-700 shadow-xs"
+                  className="w-full py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-md shadow-emerald-600/20 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
                 >
-                  <Download className="w-4 h-4 text-sky-600 dark:text-sky-400" />
-                  <span>Download Demo / Trial Installer</span>
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Pesan Cepat via WhatsApp CS</span>
                 </a>
-              )}
 
-              {/* Video Demo Quick Link */}
-              {youtubeEmbedUrl && (
-                <button
-                  onClick={() => {
-                    setActiveMediaTab('video');
-                    const el = document.getElementById('demo-video-section');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="w-full mt-2 py-2.5 rounded-2xl bg-rose-50 hover:bg-rose-100 text-rose-700 dark:bg-rose-500/10 dark:hover:bg-rose-500/20 dark:text-rose-300 text-xs font-bold transition-colors flex items-center justify-center gap-2 border border-rose-200/80 dark:border-rose-500/20"
-                >
-                  <Play className="w-3.5 h-3.5 fill-current" />
-                  <span>Tonton Video Demo YouTube</span>
-                </button>
-              )}
+                {/* Trial Download Link */}
+                {product.trial_download_url && (
+                  <a
+                    href={product.trial_download_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-2.5 rounded-2xl bg-slate-50 hover:bg-slate-100 text-slate-800 dark:bg-slate-800/80 dark:hover:bg-slate-800 dark:text-slate-200 text-xs font-bold transition-all flex items-center justify-center gap-2 border border-slate-200/90 dark:border-slate-700 shadow-xs"
+                  >
+                    <Download className="w-4 h-4 text-sky-600 dark:text-sky-400" />
+                    <span>Download Demo / Trial Gratis</span>
+                  </a>
+                )}
 
-              {/* Guarantees */}
-              <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800 space-y-3 text-xs text-slate-600 dark:text-slate-400">
+                {/* Video Demo Quick Link */}
+                {youtubeEmbedUrl && (
+                  <button
+                    onClick={() => {
+                      setActiveMediaTab('video');
+                      const el = document.getElementById('demo-video-section');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="w-full py-2 rounded-2xl bg-rose-50 hover:bg-rose-100 text-rose-700 dark:bg-rose-500/10 dark:hover:bg-rose-500/20 dark:text-rose-300 text-xs font-bold transition-colors flex items-center justify-center gap-2 border border-rose-200/80 dark:border-rose-500/20 cursor-pointer"
+                  >
+                    <Play className="w-3.5 h-3.5 fill-current" />
+                    <span>Tonton Video Demo YouTube</span>
+                  </button>
+                )}
+              </div>
+
+              {/* No-Login & Trust Guarantees */}
+              <div className="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800 space-y-3 text-xs text-slate-600 dark:text-slate-400">
+                <div className="p-3 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200/70 dark:border-emerald-500/20 flex items-start gap-2.5">
+                  <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+                  <div>
+                    <h5 className="font-bold text-slate-900 dark:text-emerald-200 text-xs">Tanpa Perlu Buat Akun / Login</h5>
+                    <p className="text-[11px] text-slate-600 dark:text-emerald-300/80 mt-0.5 leading-tight">
+                      Pesan langsung, bayar via QRIS/Transfer Bank, lisensi dan file dikirim instan.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2.5">
+                  <div className="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-400 flex items-center justify-center shrink-0">
+                    <Headphones className="w-3.5 h-3.5" />
+                  </div>
+                  <span>Gratis Remote Setup (AnyDesk / UltraViewer)</span>
+                </div>
+
                 <div className="flex items-center gap-2.5">
                   <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400 flex items-center justify-center shrink-0">
                     <ShieldCheck className="w-3.5 h-3.5" />
                   </div>
-                  <span>Installer Resmi Bebas Virus & Bergaransi</span>
+                  <span>Lisensi Permanen (Lifetime) Tanpa Iuran Bulanan</span>
                 </div>
-                <div className="flex items-center gap-2.5">
-                  <div className="w-5 h-5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400 flex items-center justify-center shrink-0">
-                    <Zap className="w-3.5 h-3.5" />
-                  </div>
-                  <span>Invoice Otomatis & Link Download Instan</span>
-                </div>
+
                 <div className="flex items-center gap-2.5">
                   <div className="w-5 h-5 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-500/20 dark:text-sky-400 flex items-center justify-center shrink-0">
                     <RefreshCw className="w-3.5 h-3.5" />
                   </div>
-                  <span>Bantuan Panduan WhatsApp CS Resmi</span>
+                  <span>Garansi Pemulihan Lisensi jika Komputer Diinstal Ulang</span>
                 </div>
               </div>
             </div>

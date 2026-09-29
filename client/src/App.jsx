@@ -7,6 +7,7 @@ import ExplorePage from './pages/ExplorePage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import TrackingPage from './pages/TrackingPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
+import DocsPage from './pages/DocsPage';
 
 export default function App() {
   return (
@@ -18,6 +19,8 @@ export default function App() {
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/product/:slug" element={<ProductDetailPage />} />
           <Route path="/software/:slug" element={<ProductDetailPage />} />
+          <Route path="/docs" element={<DocsPage />} />
+          <Route path="/panduan" element={<DocsPage />} />
           <Route path="/track" element={<TrackingPage />} />
           <Route path="/portal" element={<TrackingPage />} />
           <Route path="/admin" element={<AdminDashboardPage />} />
