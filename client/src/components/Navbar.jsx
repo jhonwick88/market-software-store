@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Layers, PackageCheck, MessageCircle, Sun, Moon } from 'lucide-react';
+import { Layers, PackageCheck, MessageCircle, Sun, Moon, BookOpen } from 'lucide-react';
 import { useTheme } from '../ThemeContext';
 
 export default function Navbar() {
