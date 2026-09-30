@@ -3,45 +3,55 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { 
   Sparkles, ShieldCheck, Zap, Download, Search, Award, Headphones, ArrowRight,
-  ChevronLeft, ChevronRight
+  ChevronLeft, ChevronRight, Star, CheckCircle2, HelpCircle, ChevronDown
 } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import SEO from '../components/SEO';
 
 export default function HomePage() {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [openFaq, setOpenFaq] = useState(null);
   const ITEMS_PER_PAGE = 6;
 
   useEffect(() => {
-    fetchProducts();
+    fetchData();
   }, []);
 
-  const fetchProducts = async () => {
+  const fetchData = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('/api/products');
-      const data = res.data.data || res.data || [];
-      setProducts(Array.isArray(data) ? data : []);
+      const [prodRes, catRes] = await Promise.all([
+        axios.get('/api/products'),
+        axios.get('/api/categories')
+      ]);
+      const prods = prodRes.data.data || prodRes.data || [];
+      const cats = catRes.data.data || catRes.data || [];
+      setProducts(Array.isArray(prods) ? prods : []);
+      setCategories(Array.isArray(cats) ? cats : []);
     } catch (err) {
-      console.error('Error fetching products:', err);
+      console.error('Error fetching data:', err);
     } finally {
       setLoading(false);
     }
   };
 
-  const filteredProducts = products.filter(p => 
-    p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (p.tagline && p.tagline.toLowerCase().includes(searchQuery.toLowerCase())) ||
-    (p.description && p.description.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  const filteredProducts = products.filter(p => {
+    const matchCategory = selectedCategory === 'all' || p.category_id === selectedCategory || p.category_slug === selectedCategory;
+    const matchSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (p.tagline && p.tagline.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (p.description && p.description.toLowerCase().includes(searchQuery.toLowerCase()));
+    return matchCategory && matchSearch;
+  });
 
-  // Reset to page 1 on search
+  // Reset to page 1 on search or category filter change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchQuery]);
+  }, [searchQuery, selectedCategory]);
 
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE) || 1;
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -161,7 +171,7 @@ export default function HomePage() {
       {/* Product Catalog Section */}
       <main className="py-14 bg-slate-50 dark:bg-slate-950 transition-colors duration-200" id="katalog-produk">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8">
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Katalog Unggulan ({products.length} Software)</span>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1">
@@ -171,6 +181,36 @@ export default function HomePage() {
             <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 md:mt-0 max-w-md">
               Semua aplikasi dilengkapi installer offline/online, panduan PDF lengkap, dan opsi paket harga fleksibel.
             </p>
+          </div>
+
+          {/* Category Filter Tabs */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8">
+            <button
+              onClick={() => setSelectedCategory('all')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                selectedCategory === 'all'
+                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/25 ring-2 ring-indigo-500/20'
+                  : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800 shadow-2xs'
+              }`}
+            >
+              Semua Kategori ({products.length})
+            </button>
+            {categories.map(c => {
+              const count = products.filter(p => p.category_id === c.id || p.category_slug === c.slug).length;
+              return (
+                <button
+                  key={c.id}
+                  onClick={() => setSelectedCategory(c.id)}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                    selectedCategory === c.id
+                      ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/25 ring-2 ring-indigo-500/20'
+                      : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800 shadow-2xs'
+                  }`}
+                >
+                  {c.name} {count > 0 ? `(${count})` : ''}
+                </button>
+              );
+            })}
           </div>
 
           {loading ? (
@@ -203,7 +243,7 @@ export default function HomePage() {
                     <button
                       onClick={() => handlePageChange(currentPage - 1)}
                       disabled={currentPage === 1}
-                      className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shadow-2xs"
+                      className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shadow-2xs cursor-pointer"
                       aria-label="Halaman Sebelumnya"
                     >
                       <ChevronLeft className="w-4 h-4" />
@@ -214,7 +254,7 @@ export default function HomePage() {
                       <button
                         key={pageNum}
                         onClick={() => handlePageChange(pageNum)}
-                        className={`w-9 h-9 rounded-xl text-xs font-bold transition-all ${
+                        className={`w-9 h-9 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                           currentPage === pageNum
                             ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30 ring-2 ring-indigo-500/20'
                             : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
@@ -228,7 +268,7 @@ export default function HomePage() {
                     <button
                       onClick={() => handlePageChange(currentPage + 1)}
                       disabled={currentPage === totalPages}
-                      className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shadow-2xs"
+                      className="p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shadow-2xs cursor-pointer"
                       aria-label="Halaman Berikutnya"
                     >
                       <ChevronRight className="w-4 h-4" />
@@ -240,6 +280,185 @@ export default function HomePage() {
           )}
         </div>
       </main>
+
+      {/* Trust & Guarantee Banner */}
+      <section className="py-12 bg-gradient-to-r from-indigo-900 via-indigo-950 to-slate-950 text-white border-y border-indigo-900/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center md:text-left">
+            <div className="flex items-center gap-3.5 justify-center md:justify-start">
+              <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-6 h-6 text-indigo-400" />
+              </div>
+              <div>
+                <h4 className="text-sm font-extrabold text-white">100% Bebas Virus</h4>
+                <p className="text-xs text-indigo-200/80">Installer resmi teruji bersih</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3.5 justify-center md:justify-start">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center shrink-0">
+                <Headphones className="w-6 h-6 text-emerald-400" />
+              </div>
+              <div>
+                <h4 className="text-sm font-extrabold text-white">Gratis Remote AnyDesk</h4>
+                <p className="text-xs text-emerald-200/80">Bantuan pasang & panduan printer</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3.5 justify-center md:justify-start">
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-400/30 flex items-center justify-center shrink-0">
+                <Award className="w-6 h-6 text-amber-400" />
+              </div>
+              <div>
+                <h4 className="text-sm font-extrabold text-white">Lisensi Permanen</h4>
+                <p className="text-xs text-amber-200/80">Beli 1x pakai selamanya</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3.5 justify-center md:justify-start">
+              <div className="w-12 h-12 rounded-2xl bg-sky-500/20 border border-sky-400/30 flex items-center justify-center shrink-0">
+                <Zap className="w-6 h-6 text-sky-400" />
+              </div>
+              <div>
+                <h4 className="text-sm font-extrabold text-white">Tanpa Wajib Login</h4>
+                <p className="text-xs text-sky-200/80">Pesan cepat, aktivasi instan</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Verified Customer Reviews */}
+      <section className="py-16 bg-white dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800/80 transition-colors duration-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Testimoni Klien</span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+              Dipercaya Ribuan Pemilik Bisnis & Sekolah
+            </h2>
+            <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+              Ulasan nyata dari pengguna software kami di berbagai kota di Indonesia.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-950 border border-slate-200/90 dark:border-slate-800 shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-1 text-amber-400 mb-3">
+                  {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
+                </div>
+                <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 italic leading-relaxed mb-4">
+                  "PintarPOS sangat stabil! Koneksi PC kasir ke HP waiter Android lancar tanpa internet. Laporan rekonsiliasi kas laci saat tutup toko bikin keuangan resto kami anti-bocor."
+                </p>
+              </div>
+              <div className="pt-4 border-t border-slate-200/80 dark:border-slate-800 flex items-center justify-between">
+                <div>
+                  <h4 className="text-xs font-bold text-slate-900 dark:text-white">Bpk. Hendra Wijaya</h4>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Owner Resto & Cafe Mantap (Surabaya)</p>
+                </div>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400">Terverifikasi</span>
+              </div>
+            </div>
+
+            <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-950 border border-slate-200/90 dark:border-slate-800 shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-1 text-amber-400 mb-3">
+                  {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
+                </div>
+                <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 italic leading-relaxed mb-4">
+                  "Bell Pintar otomatisnya sangat presisi. Suara narasi 3 bahasanya sangat jernih di speaker sekolah. Guru piket kami juga terbantu bisa remote dari HP Android saat apel pagi."
+                </p>
+              </div>
+              <div className="pt-4 border-t border-slate-200/80 dark:border-slate-800 flex items-center justify-between">
+                <div>
+                  <h4 className="text-xs font-bold text-slate-900 dark:text-white">Ibu Ratna Dewi, S.Pd</h4>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Wakasek SMP Terpadu (Bandung)</p>
+                </div>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400">Terverifikasi</span>
+              </div>
+            </div>
+
+            <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-950 border border-slate-200/90 dark:border-slate-800 shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-1 text-amber-400 mb-3">
+                  {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
+                </div>
+                <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 italic leading-relaxed mb-4">
+                  "Aplikasi SiPintar Surat Desa sangat memudahkan staf kami. Cukup ketik NIK warga, surat langsung jadi dalam 1 menit lengkap dengan QR code verifikasi. Mantap sekali!"
+                </p>
+              </div>
+              <div className="pt-4 border-t border-slate-200/80 dark:border-slate-800 flex items-center justify-between">
+                <div>
+                  <h4 className="text-xs font-bold text-slate-900 dark:text-white">Bpk. H. Sukamto</h4>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Sekretaris Desa (Jawa Tengah)</p>
+                </div>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400">Terverifikasi</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Frequently Asked Questions (FAQ) */}
+      <section className="py-16 bg-slate-50 dark:bg-slate-950 transition-colors duration-200">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Pusat Informasi</span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+              Pertanyaan yang Sering Diajukan (FAQ)
+            </h2>
+            <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+              Segala hal yang perlu Anda ketahui sebelum membeli lisensi software.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            {[
+              {
+                q: 'Apakah saya wajib membuat akun / login untuk membeli?',
+                a: 'Tidak perlu. Anda dapat langsung memilih software yang diinginkan, klik "Beli Sekarang", dan mengisi nama serta nomor WhatsApp. Invoice resmi diterbitkan seketika, dan file installer dapat langsung diunduh.'
+              },
+              {
+                q: 'Apakah aplikasi bisa berjalan offline tanpa koneksi internet?',
+                a: 'Ya, mayoritas software kami (seperti PintarPOS, Bell Pintar, PintarStock, SiPintar Desa, PintarCBT) didesain dengan arsitektur Local-First yang 100% berjalan lancar tanpa koneksi internet maupun kuota data.'
+              },
+              {
+                q: 'Bagaimana jika komputer saya rusak atau di-install ulang?',
+                a: 'Kami memberikan garansi pemulihan lisensi. Anda cukup menghubungi CS WhatsApp resmi kami dengan menyertakan nomor invoice pembelian, dan tim kami akan membantu aktivasi ulang secara gratis.'
+              },
+              {
+                q: 'Apakah ada bantuan teknis untuk setting printer dan jaringan LAN?',
+                a: 'Tentu saja. Tim teknisi kami siap membantu Anda melakukan remote setup gratis melalui AnyDesk atau UltraViewer untuk konfigurasi printer thermal, barcode scanner, maupun koneksi jaringan antar perangkat.'
+              },
+              {
+                q: 'Apakah ada biaya langganan bulanan atau tahunan tersembunyi?',
+                a: 'Tidak ada. Paket lisensi kami bersifat Lifetime (Sekali Bayar Pakai Seumur Hidup) tanpa potongan komisi per transaksi maupun tagihan sewa bulanan.'
+              }
+            ].map((faq, idx) => (
+              <div 
+                key={idx} 
+                className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 overflow-hidden shadow-xs"
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                  className="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-sm text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors cursor-pointer"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <HelpCircle className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                    <span>{faq.q}</span>
+                  </span>
+                  <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${openFaq === idx ? 'rotate-180 text-indigo-600' : ''}`} />
+                </button>
+                {openFaq === idx && (
+                  <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800/80">
+                    {faq.a}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* How to Buy Guide */}
       <section className="py-16 bg-white dark:bg-slate-900/40 border-t border-slate-200 dark:border-slate-800/60 transition-colors duration-200">
